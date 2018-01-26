@@ -1,0 +1,9 @@
+// .vscode/settings.json
+// Place your settings in this file to overwrite default and user settings.
+{
+  "prettier.eslintIntegration": true,
+  "editor.formatOnSave": true,
+  "background.style": {
+    "opacity": 0.1
+  }
+}
