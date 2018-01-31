@@ -108,6 +108,7 @@ class ModalFilter extends React.Component {
           <Picker.Item label="Dua" value="II" />
           <Picker.Item label="Akselerasi I" value="Akselerasi I" />
           <Picker.Item label="Tiga" value="III" />
+          <Picker.Item label="Empat" value="IV" />
         </Picker>
       </View>
 
