@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Text, Dimensions } from 'react-native';
+import { View, Image, Dimensions } from 'react-native';
 
 import PropTypes from 'prop-types';
 import FlatList from './FlatListComp';
@@ -23,7 +23,7 @@ export default class TabContent extends React.Component {
     const { listSchedule, marker } = this.props;
 
     const schedule = listSchedule.filter((item) => {
-      if (item.semester == 'III' && item.hari == marker) return item;
+      if (item.hari == marker) return item;
     });
     this.setState({ schedule });
   }

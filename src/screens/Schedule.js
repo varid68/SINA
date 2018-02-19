@@ -6,6 +6,7 @@ import { Container } from 'native-base';
 import OneSignal from 'react-native-onesignal';
 
 import { setModalVisible, storeUser } from '../actions/directive';
+import { fetchSchedule } from '../actions/provider';
 
 import ModalLogin from '../components/schedule/ModalLogin';
 import StatusBarComp from '../components/StatusBarComp';
@@ -73,6 +74,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setModalVisible: () => dispatch(setModalVisible()),
+  fetchSchedule: semester => dispatch(fetchSchedule(semester)),
   storeUser: user => dispatch(storeUser(user)),
 });
 

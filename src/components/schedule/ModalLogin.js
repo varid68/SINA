@@ -10,6 +10,7 @@ export default class ModalLogin extends React.Component {
   static propTypes = {
     isVisible: PropTypes.bool.isRequired,
     setModalVisible: PropTypes.func.isRequired,
+    fetchSchedule: PropTypes.func.isRequired,
     storeUser: PropTypes.func.isRequired,
   }
 
@@ -39,7 +40,7 @@ export default class ModalLogin extends React.Component {
       username: this.state.username,
       password: this.state.password,
     };
-    const { setModalVisible, storeUser } = this.props;
+    const { setModalVisible, storeUser, fetchSchedule } = this.props;
     axios({
       method: 'post',
       url: 'https://chylaceous-thin.000webhostapp.com/public/login/',
@@ -49,6 +50,7 @@ export default class ModalLogin extends React.Component {
       if (response.data == 'Wrong Password') this.showToast();
       else {
         setModalVisible();
+        fetchSchedule(response.data[0].semester);
         storeUser(response.data);
       }
     });

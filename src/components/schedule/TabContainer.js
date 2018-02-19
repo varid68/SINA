@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import TabContent from './TabContent';
 
-import { fetchSchedule } from '../../actions/provider';
 import { setDate } from '../../actions/directive';
 
 class TabContainer extends React.Component {
@@ -23,7 +22,7 @@ class TabContainer extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchSchedule();
+    // this.props.fetchSchedule();
     const list = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
     const day = Number(moment().format('d')) - 1;
     this.setState({ day, list });
@@ -68,7 +67,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchSchedule: () => dispatch(fetchSchedule()),
   setDate: newDate => dispatch(setDate(newDate)),
 });
 
