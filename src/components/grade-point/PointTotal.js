@@ -47,15 +47,15 @@ export default class PointTotal extends React.Component {
           <Text style={styles.gradeText}>Your Grade Point!</Text>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.descPoint}>IPK Utama</Text>
-            <Text style={styles.point2}>-----</Text>
+            <Text style={styles.point}>-----</Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.descPoint}>IPK Lokal</Text>
-            <Text style={styles.point2}>{this.state.ipkLokal}</Text>
+            <Text style={styles.descPoint}>Indeks Prestasi</Text>
+            <Text style={styles.point}>{this.state.ipkLokal}</Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.descPoint2}>Total IPK</Text>
-            <Text style={styles.point}>{this.state.ipk}</Text>
+            <Text style={styles.point2}>{this.state.ipk}</Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.descPoint2}>Total SKS</Text>
@@ -88,12 +88,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   descPoint: {
-    flex: 1,
+    flex: 1.2,
     color: '#fff',
     marginBottom: 3,
   },
   descPoint2: {
-    flex: 1,
+    flex: 1.2,
     color: '#fff',
     marginBottom: 3,
     fontSize: 12,
