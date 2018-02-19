@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, FlatList, Image, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Dimensions, Image, StyleSheet } from 'react-native';
 
 import PropTypes from 'prop-types';
 
+const height = Dimensions.get('window').height / 2;
 export default class FlatListComp extends React.Component {
   static propTypes = {
     list: PropTypes.array.isRequired,
@@ -13,9 +14,9 @@ export default class FlatListComp extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.list.length == 2) {
-      const awal = this.props.list.filter(item => item.pukul == '08:00 - 09:30');
-      const akhir = this.props.list.filter(item => item.pukul == '10:00 - 11:30');
+    if (this.props.list.length > 1) {
+      const awal = this.props.list.filter(item => item.pukul == '08:00-09:30');
+      const akhir = this.props.list.filter(item => item.pukul == '10:00-11:30');
       const join = awal.concat(akhir);
       this.setState({ list: join });
     } else {
@@ -51,13 +52,22 @@ export default class FlatListComp extends React.Component {
     const { list } = this.state;
 
     return (
-      <FlatList
-        data={list}
-        renderItem={
-          ({ index, item }) => this.renderListItem(index, item)
+      <View>
+        {list.length < 1 ?
+          <View style={{ justifyContent: 'center', alignItems: 'center', height }}>
+            <Text>Oops.. Its like no schedule</Text>
+            <Text style={{ fontSize: 12 }}>Let&apos;s have fun..</Text>
+            <Image source={require('../../images/empty.png')} />
+          </View> :
+          <FlatList
+            data={list}
+            renderItem={
+              ({ index, item }) => this.renderListItem(index, item)
+            }
+            keyExtractor={item => item.id_matkul}
+            extraData={this.props} />
         }
-        keyExtractor={item => item.id_matkul}
-        extraData={this.props} />
+      </View>
     );
   }
 }
