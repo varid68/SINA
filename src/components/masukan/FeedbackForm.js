@@ -27,7 +27,7 @@ export default class FeedbackForm extends React.Component {
   }
 
   state = {
-    sender: this.props.user[0].nama,
+    sender: this.props.user.nama,
     feedback: '',
     isVisible: false,
     checked: false,
@@ -51,7 +51,7 @@ export default class FeedbackForm extends React.Component {
     const imageRef = storageRef.child(`feedback/${this.state.imageName}`);
 
     const data = {
-      sender: this.props.user[0].nama,
+      sender: this.props.user.nama,
       feedback,
       time: moment().format('YYYY-MM-DD HH:mm:ss'),
     };
@@ -122,8 +122,8 @@ export default class FeedbackForm extends React.Component {
               selectedValue={sender}
               onValueChange={this.onValueChange} >
               <Item
-                label={`Dari : ${this.props.user[0].nama}`}
-                value={this.props.user[0].nama} />
+                label={`Dari : ${this.props.user.nama}`}
+                value={this.props.user.nama} />
               <Item
                 label="Dari : anonim"
                 value="anonim" />

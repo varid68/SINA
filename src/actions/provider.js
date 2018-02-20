@@ -22,10 +22,10 @@ export function fetchModul() {
   };
 }
 
-export function fetchSchedule(semester) {
+export function fetchSchedule() {
   return {
     type: 'FETCH_SCHEDULE',
-    payload: axios.get(`http://chylaceous-thin.000webhostapp.com/public/schedule/${semester}`),
+    payload: axios.get(`http://chylaceous-thin.000webhostapp.com/public/schedule/`),
   };
 }
 

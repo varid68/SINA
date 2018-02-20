@@ -9,7 +9,7 @@ const widthImg = width / 5;
 
 export default class PointTotal extends React.Component {
   static propTypes = {
-    user: PropTypes.array.isRequired,
+    user: PropTypes.object.isRequired,
     fetchIpk: PropTypes.func.isRequired,
     point: PropTypes.array.isRequired,
     ipk: PropTypes.array.isRequired,
@@ -22,7 +22,7 @@ export default class PointTotal extends React.Component {
   }
 
   componentWillMount() {
-    const { nim } = this.props.user[0];
+    const { nim } = this.props.user;
     this.props.fetchIpk(nim);
   }
 

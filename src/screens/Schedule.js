@@ -74,7 +74,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setModalVisible: () => dispatch(setModalVisible()),
-  fetchSchedule: semester => dispatch(fetchSchedule(semester)),
+  fetchSchedule: () => dispatch(fetchSchedule()),
   storeUser: user => dispatch(storeUser(user)),
 });
 

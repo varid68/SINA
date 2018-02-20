@@ -12,7 +12,7 @@ export default class TabContainer extends React.Component {
     fetchPoint: PropTypes.func.isRequired,
     fetching: PropTypes.bool.isRequired,
     point: PropTypes.array.isRequired,
-    user: PropTypes.array.isRequired,
+    user: PropTypes.object.isRequired,
   };
 
   state = {
@@ -21,7 +21,7 @@ export default class TabContainer extends React.Component {
   };
 
   componentWillMount() {
-    const { nim } = this.props.user[0];
+    const { nim } = this.props.user;
     this.props.fetchPoint(nim);
   }
 

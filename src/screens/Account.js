@@ -116,8 +116,8 @@ class Account extends React.Component {
       <Image
         source={require('../images/two.png')}
         style={{ borderRadius: 70 }} />
-      <Text style={{ color: '#fff', fontSize: 17 }}>{this.props.user[0].nama}</Text>
-      <Text style={{ color: '#fff', fontSize: 12 }}>{this.props.user[0].nim}</Text>
+      <Text style={{ color: '#fff', fontSize: 17 }}>{this.props.user.nama}</Text>
+      <Text style={{ color: '#fff', fontSize: 12 }}>{this.props.user.nim}</Text>
     </View>
   )
 

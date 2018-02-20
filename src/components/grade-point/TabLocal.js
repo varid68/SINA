@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, Image, Dimensions, Picker, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Image, Dimensions, StyleSheet } from 'react-native';
 import { Button, Icon } from 'native-base';
 
 import PropTypes from 'prop-types';
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     paddingTop: 0,
     paddingBottom: 0,
     height: 30,
-    borderRadius:20,
+    borderRadius: 20,
     backgroundColor: '#C51665',
   },
   filterIcon: {

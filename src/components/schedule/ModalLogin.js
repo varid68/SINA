@@ -50,7 +50,7 @@ export default class ModalLogin extends React.Component {
       if (response.data == 'Wrong Password') this.showToast();
       else {
         setModalVisible();
-        fetchSchedule(response.data[0].semester);
+        fetchSchedule();
         storeUser(response.data);
       }
     });
