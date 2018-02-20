@@ -9,13 +9,39 @@ export default class TabLocal extends React.Component {
   static propTypes = {
     fetching: PropTypes.bool.isRequired,
     point: PropTypes.array.isRequired,
+    user: PropTypes.object.isRequired,
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      selected: 'III',
+      selected: '',
     };
+  }
+
+  componentWillMount() {
+    let semester = null;
+    switch (this.props.user.semester) {
+      case 'I': semester = null;
+        break;
+
+      case 'II': semester = 'I';
+        break;
+
+      case 'Akselerasi I': semester = 'II';
+        break;
+
+      case 'III': semester = 'Akselerasi I';
+        break;
+
+      case 'IV': semester = 'III';
+        break;
+
+      default: semester = 'IV';
+        break;
+    }
+
+    this.setState({ selected: semester });
   }
 
   getGradeImage = (Point) => {

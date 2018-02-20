@@ -39,7 +39,7 @@ export default class TabContainer extends React.Component {
 
   render() {
     const { point, filteredPoint } = this.state;
-    const { fetching } = this.props;
+    const { fetching, user } = this.props;
 
     return (
       <Tabs
@@ -51,6 +51,7 @@ export default class TabContainer extends React.Component {
           activeTabStyle={{ backgroundColor: '#4caf50' }}
           activeTextStyle={styles.white}>
           <TabLocal
+            user={user}
             fetching={fetching}
             point={filteredPoint} />
         </Tab>

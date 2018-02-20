@@ -19,6 +19,7 @@ export default class PointTotal extends React.Component {
     totalSks: 0,
     ipk: 0,
     ipkLokal: 0,
+    semester: '',
   }
 
   componentWillMount() {
@@ -27,15 +28,36 @@ export default class PointTotal extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    let semester = null;
+    switch (this.props.user.semester) {
+      case 'I': semester = null;
+        break;
+
+      case 'II': semester = 'I';
+        break;
+
+      case 'Akselerasi I': semester = 'II';
+        break;
+
+      case 'III': semester = 'Akselerasi I';
+        break;
+
+      case 'IV': semester = 'III';
+        break;
+
+      default: semester = 'IV';
+        break;
+    }
+
     if (this.props.point != nextProps.point) {
       if (nextProps.point.length > 0) {
         const { ipk } = this.props.ipk[0];
-        const ipkLokal = this.props.ipk.filter(item => item.semester == 'I').map(item => item.ip);
+        const ipkLokal = this.props.ipk.filter(item => item.semester == semester).map(item => item.ip);
         const totalSks = nextProps.point.reduce((a, b) => {
           const toNumber = Number(b.sks);
           return a + toNumber;
         }, 0);
-        this.setState({ ipk, totalSks, ipkLokal });
+        this.setState({ ipk, totalSks, ipkLokal, semester });
       }
     }
   }
@@ -50,7 +72,7 @@ export default class PointTotal extends React.Component {
             <Text style={styles.point}>-----</Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.descPoint}>Indeks Prestasi</Text>
+            <Text style={styles.descPoint}>IP -> {this.state.semester}</Text>
             <Text style={styles.point}>{this.state.ipkLokal}</Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
