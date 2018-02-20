@@ -22,7 +22,7 @@ class TabContainer extends React.Component {
   }
 
   componentWillMount() {
-    // if (this.props.listSchedule.length < 1) this.props.fetchSchedule();
+    if (this.props.listSchedule.length < 1) this.props.fetchSchedule();
     const list = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
     const day = Number(moment().format('d')) - 1;
     this.setState({ day, list });
@@ -64,6 +64,7 @@ const mapStateToProps = state => ({
   listSchedule: state.providerReducer.listSchedule,
   fetching: state.providerReducer.fetching,
   isVisible: state.directiveReducer.isVisible,
+  user: state.directiveReducer.user,
 });
 
 const mapDispatchToProps = dispatch => ({
