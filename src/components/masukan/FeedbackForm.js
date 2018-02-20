@@ -18,7 +18,7 @@ const width = Dimensions.get('window').width / 2.5;
 
 export default class FeedbackForm extends React.Component {
   static propTypes = {
-    user: PropTypes.array.isRequired,
+    user: PropTypes.object.isRequired,
   }
 
   static navigatorStyle = {
