@@ -10,21 +10,21 @@ const widthImg = width / 5;
 export default class PointTotal extends React.Component {
   static propTypes = {
     user: PropTypes.object.isRequired,
-    fetchIpk: PropTypes.func.isRequired,
+    fetchIndeks: PropTypes.func.isRequired,
     point: PropTypes.array.isRequired,
-    ipk: PropTypes.array.isRequired,
+    indeks: PropTypes.object.isRequired,
   }
 
   state = {
     totalSks: 0,
     ipk: 0,
-    ipkLokal: 0,
+    indeksPrestasi: 0,
     semester: '',
   }
 
   componentWillMount() {
     const { nim } = this.props.user;
-    this.props.fetchIpk(nim);
+    this.props.fetchIndeks(nim);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,13 +51,13 @@ export default class PointTotal extends React.Component {
 
     if (this.props.point != nextProps.point) {
       if (nextProps.point.length > 0) {
-        const { ipk } = this.props.ipk[0];
-        const ipkLokal = this.props.ipk.filter(item => item.semester == semester).map(item => item.ip);
+        const { ipk } = this.props.indeks;
+        const indeksPrestasi = this.props.indeks.indeks_prestasi.filter(item => item.semester == semester).map(item => item.ip);
         const totalSks = nextProps.point.reduce((a, b) => {
           const toNumber = Number(b.sks);
           return a + toNumber;
         }, 0);
-        this.setState({ ipk, totalSks, ipkLokal, semester });
+        this.setState({ ipk, totalSks, indeksPrestasi, semester });
       }
     }
   }
@@ -73,7 +73,7 @@ export default class PointTotal extends React.Component {
           </View>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.descPoint}>IP -> {this.state.semester}</Text>
-            <Text style={styles.point}>{this.state.ipkLokal}</Text>
+            <Text style={styles.point}>{this.state.indeksPrestasi}</Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.descPoint2}>Total IPK</Text>

@@ -6,7 +6,7 @@ const initialState = {
   listSchedule: [],
   filteredListSchedule: [],
   point: [],
-  ipk: [],
+  indeks: [],
   calendar: [],
   fetching: false,
   error: null,
@@ -116,19 +116,19 @@ const reducer = (state = initialState, action) => {
       };
       break;
 
-    case 'FETCH_IPK_PENDING':
+    case 'FETCH_INDEKS_PENDING':
       return { ...state, fetching: true };
       break;
 
-    case 'FETCH_IPK_FULFILLED':
+    case 'FETCH_INDEKS_FULFILLED':
       return {
         ...state,
         fetching: false,
-        ipk: action.payload.data,
+        indeks: action.payload.data,
       };
       break;
 
-    case 'FETCH_IPK_REJECTED':
+    case 'FETCH_INDEKS_REJECTED':
       return {
         ...state,
         fetching: false,

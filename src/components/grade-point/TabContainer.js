@@ -26,9 +26,30 @@ export default class TabContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    let semester = null;
+    switch (this.props.user.semester) {
+      case 'I': semester = null;
+        break;
+
+      case 'II': semester = 'I';
+        break;
+
+      case 'Akselerasi I': semester = 'II';
+        break;
+
+      case 'III': semester = 'Akselerasi I';
+        break;
+
+      case 'IV': semester = 'III';
+        break;
+
+      default: semester = 'IV';
+        break;
+    }
+
     if (this.props.point != nextProps.point) {
       if (nextProps.point.length > 0) {
-        const filtered = nextProps.point.filter(item => item.semester == 'I');
+        const filtered = nextProps.point.filter(item => item.semester == semester);
         this.setState({
           filteredPoint: filtered,
           point: nextProps.point,

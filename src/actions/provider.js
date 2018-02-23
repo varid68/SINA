@@ -36,9 +36,9 @@ export function fetchPoint(nim) {
   };
 }
 
-export function fetchIpk(nim) {
+export function fetchIndeks(nim) {
   return {
-    type: 'FETCH_IPK',
+    type: 'FETCH_INDEKS',
     payload: axios.get('http://chylaceous-thin.000webhostapp.com/public/ipk/' + nim),
   };
 }

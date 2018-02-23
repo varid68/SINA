@@ -11,7 +11,7 @@ import PointTotal from '../components/grade-point/PointTotal';
 import TabContainer from '../components/grade-point/TabContainer';
 
 import { resetDrawer } from '../actions/directive';
-import { fetchPoint, fetchIpk } from '../actions/provider';
+import { fetchPoint, fetchIndeks } from '../actions/provider';
 
 class GradePoint extends React.Component {
   static propTypes = {
@@ -77,13 +77,13 @@ const mapStateToProps = state => ({
   fetching: state.providerReducer.fetching,
   point: state.providerReducer.point,
   user: state.directiveReducer.user,
-  ipk: state.providerReducer.ipk,
+  indeks: state.providerReducer.indeks,
 });
 
 const mapDispatchToProps = dispatch => ({
   resetDrawer: () => dispatch(resetDrawer()),
   fetchPoint: nim => dispatch(fetchPoint(nim)),
-  fetchIpk: nim => dispatch(fetchIpk(nim)),
+  fetchIndeks: nim => dispatch(fetchIndeks(nim)),
 });
 
 export default connect(
