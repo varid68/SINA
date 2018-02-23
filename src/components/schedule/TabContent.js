@@ -13,7 +13,7 @@ export default class TabContent extends React.Component {
     marker: PropTypes.string.isRequired,
     listSchedule: PropTypes.array.isRequired,
     fetching: PropTypes.bool.isRequired,
-    user: PropTypes.object.isRequired,
+    user: PropTypes.any.isRequired,
   }
 
   state = {
