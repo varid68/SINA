@@ -12,7 +12,7 @@ export default class PointTotal extends React.Component {
     user: PropTypes.object.isRequired,
     fetchIndeks: PropTypes.func.isRequired,
     point: PropTypes.array.isRequired,
-    indeks: PropTypes.object.isRequired,
+    indeks: PropTypes.any.isRequired,
   }
 
   state = {

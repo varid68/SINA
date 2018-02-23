@@ -15,6 +15,7 @@ export default class TabLocal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isVisible: true,
       selected: '',
     };
   }
@@ -60,6 +61,15 @@ export default class TabLocal extends React.Component {
     return image;
   }
 
+  beginScrolling = () => {
+    this.setState({ isVisible: false });
+  }
+
+  endScrolling = () => {
+    this.setState({ isVisible: true });
+
+  }
+
   renderListItem = (index, item) => (
     <View style={styles.listItemContainer}>
       <View style={{ flex: 2 }}>
@@ -77,7 +87,7 @@ export default class TabLocal extends React.Component {
 
   render() {
     const { fetching, point } = this.props;
-    const { selected } = this.state;
+    const { selected, isVisible } = this.state;
 
     return (
       <View>
@@ -90,14 +100,18 @@ export default class TabLocal extends React.Component {
                 ({ index, item }) => this.renderListItem(index, item)
               }
               keyExtractor={item => item.id_matkul}
-              extraData={this.props} />
-            <View style={styles.notifContainer}>
-              <Text style={styles.notifContent}>Semester {selected}</Text>
-            </View>
-            <Button style={styles.fabContainer}>
-              <Icon name="ios-funnel" style={styles.filterIcon} />
-              <Text style={styles.filterText}>filter</Text>
-            </Button>
+              extraData={this.props}
+              onScrollBeginDrag={this.beginScrolling}
+              onScrollEndDrag={this.endScrolling} />
+            {isVisible ?
+              <View style={styles.notifContainer}>
+                <Text style={styles.notifContent}>Semester {selected}</Text>
+              </View> : null}
+            {isVisible ?
+              <Button style={styles.fabContainer}>
+                <Icon name="ios-funnel" style={styles.filterIcon} />
+                <Text style={styles.filterText}>filter</Text>
+              </Button> : null}
           </View>
         }
       </View>
