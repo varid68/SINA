@@ -15,7 +15,7 @@ const heightHeader = height / 4;
 class Account extends React.Component {
   static propTypes = {
     navigator: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired,
+    user: PropTypes.any.isRequired,
     setModalVisible: PropTypes.func.isRequired,
     resetDrawer: PropTypes.func.isRequired,
   }
