@@ -131,7 +131,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#eee',
     marginBottom: 5,
-    padding: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   idMatkul: {
     marginBottom: 10,
@@ -140,6 +143,7 @@ const styles = StyleSheet.create({
   },
   matkul: {
     fontSize: 13,
+    marginBottom: -5,
   },
   sks: {
     fontSize: 12,
@@ -148,6 +152,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
     alignItems: 'flex-end',
+    justifyContent: 'center',
   },
   image: {
     width: 60,
