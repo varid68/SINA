@@ -58,8 +58,8 @@ class FlatListComp extends React.Component {
         description: 'Document',
       },
     };
-    config(options).fetch('GET', url).then((res) => {
-      console.log(res);
+    config(options).fetch('GET', url).then(() => {
+      // console.log(res);
     });
   }
 

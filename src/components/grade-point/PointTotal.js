@@ -13,13 +13,13 @@ export default class PointTotal extends React.Component {
     fetchIndeks: PropTypes.func.isRequired,
     point: PropTypes.array.isRequired,
     indeks: PropTypes.any.isRequired,
+    selectedSemester: PropTypes.string.isRequired,
   }
 
   state = {
     totalSks: 0,
     ipk: 0,
     indeksPrestasi: 0,
-    semester: '',
   }
 
   componentWillMount() {
@@ -28,36 +28,15 @@ export default class PointTotal extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let semester = null;
-    switch (this.props.user.semester) {
-      case 'I': semester = null;
-        break;
-
-      case 'II': semester = 'I';
-        break;
-
-      case 'Akselerasi I': semester = 'II';
-        break;
-
-      case 'III': semester = 'Akselerasi I';
-        break;
-
-      case 'IV': semester = 'III';
-        break;
-
-      default: semester = 'IV';
-        break;
-    }
-
-    if (this.props.point != nextProps.point) {
+    if (this.props.point != nextProps.point || this.props.selectedSemester != nextProps.selectedSemester) {
       if (nextProps.point.length > 0) {
         const { ipk } = this.props.indeks;
-        const indeksPrestasi = this.props.indeks.indeks_prestasi.filter(item => item.semester == semester).map(item => item.ip);
+        const indeksPrestasi = this.props.indeks.indeks_prestasi.filter(item => item.semester == nextProps.selectedSemester).map(item => item.ip);
         const totalSks = nextProps.point.reduce((a, b) => {
           const toNumber = Number(b.sks);
           return a + toNumber;
         }, 0);
-        this.setState({ ipk, totalSks, indeksPrestasi, semester });
+        this.setState({ ipk, totalSks, indeksPrestasi });
       }
     }
   }
@@ -72,7 +51,7 @@ export default class PointTotal extends React.Component {
             <Text style={styles.point}>-----</Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.descPoint}>IP -> {this.state.semester}</Text>
+            <Text style={styles.descPoint}>IP -&gt; {this.props.selectedSemester}</Text>
             <Text style={styles.point}>{this.state.indeksPrestasi}</Text>
           </View>
           <View style={{ flexDirection: 'row' }}>

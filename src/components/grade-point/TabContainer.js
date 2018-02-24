@@ -13,6 +13,8 @@ export default class TabContainer extends React.Component {
     fetching: PropTypes.bool.isRequired,
     point: PropTypes.array.isRequired,
     user: PropTypes.object.isRequired,
+    selectedSemester: PropTypes.string.isRequired,
+    changeSemester: PropTypes.func.isRequired,
   };
 
   state = {
@@ -47,9 +49,9 @@ export default class TabContainer extends React.Component {
         break;
     }
 
-    if (this.props.point != nextProps.point) {
+    if (this.props.point != nextProps.point || this.props.selectedSemester != nextProps.selectedSemester) {
       if (nextProps.point.length > 0) {
-        const filtered = nextProps.point.filter(item => item.semester == semester);
+        const filtered = nextProps.point.filter(item => item.semester == nextProps.selectedSemester);
         this.setState({
           filteredPoint: filtered,
           point: nextProps.point,
@@ -60,7 +62,7 @@ export default class TabContainer extends React.Component {
 
   render() {
     const { point, filteredPoint } = this.state;
-    const { fetching, user } = this.props;
+    const { fetching, user, selectedSemester, changeSemester } = this.props;
 
     return (
       <Tabs
@@ -72,6 +74,8 @@ export default class TabContainer extends React.Component {
           activeTabStyle={{ backgroundColor: '#4caf50' }}
           activeTextStyle={styles.white}>
           <TabLocal
+            changeSemester={changeSemester}
+            selectedSemester={selectedSemester}
             user={user}
             fetching={fetching}
             point={filteredPoint} />

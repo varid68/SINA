@@ -39,3 +39,10 @@ export function resetDrawer() {
     type: 'RESET_DRAWER',
   };
 }
+
+export function changeSemester(semester) {
+  return {
+    type: 'CHANGE_SELECTED_SEMESTER',
+    payload: semester,
+  };
+}

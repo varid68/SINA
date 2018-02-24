@@ -3,46 +3,38 @@ import { View, Text, FlatList, Image, Dimensions, StyleSheet } from 'react-nativ
 import { Button, Icon } from 'native-base';
 
 import PropTypes from 'prop-types';
+import ModalFilter from './ModalFilter';
 
-const width = (Dimensions.get('window').width / 2) - 25;
+const { width } = Dimensions.get('window');
 export default class TabLocal extends React.Component {
   static propTypes = {
     fetching: PropTypes.bool.isRequired,
     point: PropTypes.array.isRequired,
     user: PropTypes.object.isRequired,
+    selectedSemester: PropTypes.string.isRequired,
+    changeSemester: PropTypes.func.isRequired,
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      isVisible: true,
-      selected: '',
+      isScrolling: false,
+      modalVisibility: false,
+      left: 0,
+      right: 0,
     };
   }
 
-  componentWillMount() {
-    let semester = null;
-    switch (this.props.user.semester) {
-      case 'I': semester = null;
-        break;
+  onLayout = (event) => {
+    const widthScreen = Dimensions.get('window').width;
+    const left = (widthScreen - event.nativeEvent.layout.width) / 2;
+    this.setState({ left });
+  }
 
-      case 'II': semester = 'I';
-        break;
-
-      case 'Akselerasi I': semester = 'II';
-        break;
-
-      case 'III': semester = 'Akselerasi I';
-        break;
-
-      case 'IV': semester = 'III';
-        break;
-
-      default: semester = 'IV';
-        break;
-    }
-
-    this.setState({ selected: semester });
+  onLayout2 = (event) => {
+    const widthScreen = Dimensions.get('window').width;
+    const right = (widthScreen - event.nativeEvent.layout.width) / 2;
+    this.setState({ right });
   }
 
   getGradeImage = (Point) => {
@@ -62,12 +54,15 @@ export default class TabLocal extends React.Component {
   }
 
   beginScrolling = () => {
-    this.setState({ isVisible: false });
+    this.setState({ isScrolling: true });
   }
 
   endScrolling = () => {
-    this.setState({ isVisible: true });
+    this.setState({ isScrolling: false });
+  }
 
+  closeModal = () => {
+    this.setState({ modalVisibility: false });
   }
 
   renderListItem = (index, item) => (
@@ -86,8 +81,8 @@ export default class TabLocal extends React.Component {
   );
 
   render() {
-    const { fetching, point } = this.props;
-    const { selected, isVisible } = this.state;
+    const { fetching, point, user, changeSemester, selectedSemester } = this.props;
+    const { isScrolling, modalVisibility } = this.state;
 
     return (
       <View>
@@ -103,17 +98,29 @@ export default class TabLocal extends React.Component {
               extraData={this.props}
               onScrollBeginDrag={this.beginScrolling}
               onScrollEndDrag={this.endScrolling} />
-            {isVisible ?
-              <View style={styles.notifContainer}>
-                <Text style={styles.notifContent}>Semester {selected}</Text>
+            {!isScrolling ?
+              <View
+                style={[styles.notifContainer, { left: this.state.left }]}
+                onLayout={event => this.onLayout(event)}>
+                <Text style={styles.notifContent}>Semester {selectedSemester}</Text>
               </View> : null}
-            {isVisible ?
-              <Button style={styles.fabContainer}>
+            {!isScrolling ?
+              <Button
+                style={[styles.fabContainer, { right: this.state.right }]}
+                onLayout={e => this.onLayout2(e)}
+                onPress={() => this.setState({ modalVisibility: true })}>
                 <Icon name="ios-funnel" style={styles.filterIcon} />
                 <Text style={styles.filterText}>filter</Text>
               </Button> : null}
           </View>
         }
+
+        <ModalFilter
+          user={user}
+          selectedSemester={selectedSemester}
+          changeSemester={changeSemester}
+          closeModal={this.closeModal}
+          modalVisibility={modalVisibility} />
       </View>
     );
   }
@@ -150,7 +157,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#4caf50',
     position: 'absolute',
     top: 5,
-    right: width,
     borderRadius: 12,
   },
   notifContent: {
@@ -161,7 +167,6 @@ const styles = StyleSheet.create({
   fabContainer: {
     position: 'absolute',
     bottom: 5,
-    right: width - 5,
     paddingTop: 0,
     paddingBottom: 0,
     height: 30,

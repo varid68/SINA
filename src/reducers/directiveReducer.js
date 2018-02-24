@@ -8,6 +8,7 @@ const initialState = {
   dateTab: fullDate,
   isVisible: true,
   user: [],
+  selectedSemester: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,12 +21,38 @@ const reducer = (state = initialState, action) => {
       return { ...state, isVisible: !state.isVisible };
       break;
 
-    case 'STORE_USER':
-      return { ...state, user: action.payload };
+    case 'STORE_USER': {
+      let semester = null;
+      switch (action.payload.semester) {
+        case 'I': semester = null;
+          break;
+
+        case 'II': semester = 'I';
+          break;
+
+        case 'Akselerasi I': semester = 'II';
+          break;
+
+        case 'III': semester = 'Akselerasi I';
+          break;
+
+        case 'IV': semester = 'III';
+          break;
+
+        default: semester = 'IV';
+          break;
+      }
+
+      return { ...state, user: action.payload, selectedSemester: semester };
       break;
+    }
 
     case 'RESET_DRAWER':
       return { ...state, drawer: !state.drawer };
+      break;
+
+    case 'CHANGE_SELECTED_SEMESTER':
+      return { ...state, selectedSemester: action.payload };
       break;
 
     default:
