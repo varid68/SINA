@@ -98,7 +98,7 @@ export default class TabLocal extends React.Component {
               extraData={this.props}
               onScrollBeginDrag={this.beginScrolling}
               onScrollEndDrag={this.endScrolling} />
-            {!isScrolling ?
+            {isScrolling ?
               <View
                 style={[styles.notifContainer, { left: this.state.left }]}
                 onLayout={event => this.onLayout(event)}>
