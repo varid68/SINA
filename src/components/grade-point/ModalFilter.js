@@ -16,13 +16,13 @@ class ModalFilter extends React.Component {
 
   state = {
     semester: '',
-    selected: '',
+    selected: '- none -',
   };
 
   componentWillMount() {
     let semester = null;
     switch (this.props.user.semester) {
-      case 'I': semester = [];
+      case 'I': semester = ['- none -'];
         break;
 
       case 'II': semester = ['- none -', 'I'];
@@ -45,24 +45,10 @@ class ModalFilter extends React.Component {
   }
 
   filter = () => {
-    // const { selectedDosen, selectedFormat } = this.state;
-    // const { listModul } = this.props;
-
-    // let filtered = [];
-    // if (selectedDosen != '- none -') {
-    //   filtered = listModul.slice().filter(item => item.nama == selectedDosen);
-    // } else filtered = listModul;
-
-    // if (selectedFormat != '- none -') {
-    //   filtered = filtered.filter((item) => {
-    //     const i = item.title.split('.')[1];
-    //     if (i == selectedFormat) return i;
-    //   });
-    // }
-    // this.props.filterListModul(filtered);
-    // alert(this.state.selected);
-    if (this.state.selected != '- none -') this.props.changeSemester(this.state.selected);
-    this.props.closeModal();
+    const { selected } = this.state;
+    const { changeSemester, closeModal } = this.props;
+    if (selected != '- none -') changeSemester(this.state.selected);
+    closeModal();
   }
 
   renderContent = () => (
