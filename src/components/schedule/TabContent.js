@@ -25,6 +25,7 @@ export default class TabContent extends React.Component {
 
     const schedule = listSchedule.filter((item) => {
       if (item.hari == marker && item.semester == user.semester) return item;
+      return false;
     });
     this.setState({ schedule });
   }
