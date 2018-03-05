@@ -10,7 +10,7 @@ import PopupMenu from '../components/PopupMenu';
 import { resetDrawer, setModalVisible } from '../actions/directive';
 
 const { height, width } = Dimensions.get('window');
-const heightHeader = height / 4;
+const heightHeader = (height / 4) + 30;
 
 class Account extends React.Component {
   static propTypes = {
@@ -113,11 +113,54 @@ class Account extends React.Component {
 
   renderName = () => (
     <View style={styles.imageContainer}>
-      <Image
-        source={require('../images/two.png')}
-        style={{ borderRadius: 70 }} />
-      <Text style={{ color: '#fff', fontSize: 17 }}>{this.props.user.nama}</Text>
-      <Text style={{ color: '#fff', fontSize: 12 }}>{this.props.user.nim}</Text>
+      <View style={styles.imageContainer2}>
+        <View style={{ flex: 1 }}>
+          <Text style={{ textAlign: 'center', color: '#fff' }}>Farid Tanwir</Text>
+        </View>
+        <Image
+          source={require('../images/two.png')}
+          style={{ borderRadius: 70 }} />
+        <View style={{ flex: 1 }}>
+          <Text style={{ textAlign: 'center', color: '#fff' }}>2116020</Text>
+        </View>
+      </View>
+
+      <View style={{ flex: 1, flexDirection: 'column' }}>
+        <View style={{flexDirection:'row', justifyContent:'center'}}>
+          <Text style={{backgroundColor:'background:rgba(255,255,255, 0.2)', paddingVertical:3, paddingHorizontal:7, borderRadius:10, fontSize:10}}>SEMESTER</Text>
+        </View>
+        <View style={{ flex: 1, paddingLeft: 15, paddingRight: 15, marginTop:-25 }}>
+          <View style={{ flex: 1, borderBottomColor: '#263238', borderBottomWidth: 2, borderRadius: 10 }} />
+        </View>
+
+        <View style={{ flex: 1, width: 360, flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 15, paddingRight: 15 }}>
+          <View style={{flexDirection: 'column'}}>
+            <View style={{ width: 10, height: 10, backgroundColor: '#263238', borderRadius: 5, marginTop: -7 }} />
+            <Text style={{marginTop:8}}>I</Text>
+          </View>
+          <View style={{flexDirection: 'column'}}>
+            <View style={{ width: 20, height: 20, backgroundColor: '#263238', borderRadius: 10, marginTop: -12 }} />
+            <View style={{ width: 10, height: 10, backgroundColor: '#4caf50', borderRadius: 5, marginTop: -15, marginLeft:5 }} />
+            <Text style={{paddingLeft:7, marginTop:10}}>II</Text>
+          </View>
+          <View style={{flexDirection: 'column'}}>
+            <View style={{ width: 10, height: 10, backgroundColor: '#263238', borderRadius: 5, marginTop: -7 }} />
+            <Text style={{marginTop:8}}>A1</Text>
+          </View>
+          <View style={{flexDirection: 'column'}}>
+            <View style={{ width: 10, height: 10, backgroundColor: '#263238', borderRadius: 5, marginTop: -7 }} />
+            <Text style={{marginTop:8}}>III</Text>
+          </View>
+          <View style={{flexDirection: 'column'}}>
+            <View style={{ width: 10, height: 10, backgroundColor: '#263238', borderRadius: 5, marginTop: -7 }} />
+            <Text style={{marginTop:8}}>IV</Text>
+          </View>
+          <View style={{flexDirection: 'column'}}>
+            <View style={{ width: 10, height: 10, backgroundColor: '#263238', borderRadius: 5, marginTop: -7 }} />
+            <Text style={{marginTop:8}}>A2</Text>
+          </View>
+        </View>
+      </View>
     </View>
   )
 
@@ -175,8 +218,15 @@ const styles = StyleSheet.create({
     width: width - 70,
   },
   imageContainer: {
+    flex: 0,
+    flexDirection: 'column',
     backgroundColor: '#4caf50',
     height: heightHeader,
+  },
+  imageContainer2: {
+    flex: 1.5,
+    flexDirection: 'row',
+    height: heightHeader / 2,
     justifyContent: 'center',
     alignItems: 'center',
   },
