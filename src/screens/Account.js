@@ -28,6 +28,14 @@ class Account extends React.Component {
   constructor(props) {
     super(props);
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    this.state = {
+      semester: [],
+    };
+  }
+
+  componentWillMount() {
+    const semester = ['I', 'II', 'Akselerasi I', 'III', 'IV', 'Akselerasi II'];
+    this.setState({ semester });
   }
 
   componentDidMount() {
@@ -85,7 +93,7 @@ class Account extends React.Component {
 
   beriBintang = () => {
     const url = 'https://play.google.com/store/apps/details?id=name.ratson.uiexplorer';
-    Linking.openURL(url).catch(err => console.error('An error occurred', err));
+    Linking.openURL(url).catch();
   }
 
   renderHeader = () => (
@@ -111,54 +119,61 @@ class Account extends React.Component {
     </Header >
   )
 
+  renderSmallDot = (item, index) => {
+    let x = item;
+    if (item === 'Akselerasi I') x = 'A1';
+    if (item === 'Akselerasi II') x = 'A2';
+
+    return (
+      <View style={{ flexDirection: 'column' }} key={index}>
+        <View style={styles.smallDot} />
+        <Text style={{ marginTop: 8 }}>{x}</Text>
+      </View>
+    );
+  }
+
+  renderBigDot = (item, index) => {
+    let x = item;
+    if (item === 'Akselerasi I') x = 'A1';
+    if (item === 'Akselerasi II') x = 'A2';
+
+    return (
+      <View style={{ flexDirection: 'column' }} key={index}>
+        <View style={styles.outerBigDot} />
+        <View style={styles.innerBigDot} />
+        <Text style={styles.content}>{x}</Text>
+      </View>
+    );
+  }
+
   renderName = () => (
-    <View style={styles.imageContainer}>
-      <View style={styles.imageContainer2}>
+    <View style={styles.container}>
+
+      <View style={styles.nameContainer}>
         <View style={{ flex: 1 }}>
-          <Text style={{ textAlign: 'center', color: '#fff' }}>Farid Tanwir</Text>
+          <Text style={styles.name}>{this.props.user.nama}</Text>
         </View>
         <Image
           source={require('../images/two.png')}
           style={{ borderRadius: 70 }} />
         <View style={{ flex: 1 }}>
-          <Text style={{ textAlign: 'center', color: '#fff' }}>2116020</Text>
+          <Text style={styles.name}>{this.props.user.nim}</Text>
         </View>
       </View>
 
-      <View style={{ flex: 1, flexDirection: 'column' }}>
-        <View style={{flexDirection:'row', justifyContent:'center'}}>
-          <Text style={{backgroundColor:'background:rgba(255,255,255, 0.2)', paddingVertical:3, paddingHorizontal:7, borderRadius:10, fontSize:10}}>SEMESTER</Text>
+      <View style={styles.stepContainer}>
+        <View style={styles.semesterTextContainer}>
+          <Text style={styles.semesterText}>SEMESTER</Text>
         </View>
-        <View style={{ flex: 1, paddingLeft: 15, paddingRight: 15, marginTop:-25 }}>
-          <View style={{ flex: 1, borderBottomColor: '#263238', borderBottomWidth: 2, borderRadius: 10 }} />
+        <View style={styles.lineContainer}>
+          <View style={styles.line} />
         </View>
 
-        <View style={{ flex: 1, width: 360, flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 15, paddingRight: 15 }}>
-          <View style={{flexDirection: 'column'}}>
-            <View style={{ width: 10, height: 10, backgroundColor: '#263238', borderRadius: 5, marginTop: -7 }} />
-            <Text style={{marginTop:8}}>I</Text>
-          </View>
-          <View style={{flexDirection: 'column'}}>
-            <View style={{ width: 20, height: 20, backgroundColor: '#263238', borderRadius: 10, marginTop: -12 }} />
-            <View style={{ width: 10, height: 10, backgroundColor: '#4caf50', borderRadius: 5, marginTop: -15, marginLeft:5 }} />
-            <Text style={{paddingLeft:7, marginTop:10}}>II</Text>
-          </View>
-          <View style={{flexDirection: 'column'}}>
-            <View style={{ width: 10, height: 10, backgroundColor: '#263238', borderRadius: 5, marginTop: -7 }} />
-            <Text style={{marginTop:8}}>A1</Text>
-          </View>
-          <View style={{flexDirection: 'column'}}>
-            <View style={{ width: 10, height: 10, backgroundColor: '#263238', borderRadius: 5, marginTop: -7 }} />
-            <Text style={{marginTop:8}}>III</Text>
-          </View>
-          <View style={{flexDirection: 'column'}}>
-            <View style={{ width: 10, height: 10, backgroundColor: '#263238', borderRadius: 5, marginTop: -7 }} />
-            <Text style={{marginTop:8}}>IV</Text>
-          </View>
-          <View style={{flexDirection: 'column'}}>
-            <View style={{ width: 10, height: 10, backgroundColor: '#263238', borderRadius: 5, marginTop: -7 }} />
-            <Text style={{marginTop:8}}>A2</Text>
-          </View>
+        <View style={styles.dotContainer}>
+          {this.state.semester.map((item, i) =>
+            (item === this.props.user.semester ?
+              this.renderBigDot(item, i) : this.renderSmallDot(item, i)
+            ))}
         </View>
       </View>
     </View>
@@ -217,18 +232,83 @@ const styles = StyleSheet.create({
     fontSize: 17,
     width: width - 70,
   },
-  imageContainer: {
+  container: {
     flex: 0,
     flexDirection: 'column',
     backgroundColor: '#4caf50',
     height: heightHeader,
   },
-  imageContainer2: {
+  nameContainer: {
     flex: 1.5,
     flexDirection: 'row',
     height: heightHeader / 2,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  name: {
+    textAlign: 'center',
+    color: '#fff',
+  },
+  stepContainer: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  semesterTextContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  semesterText: {
+    backgroundColor: 'rgba(255,255,255, 0.2)',
+    paddingVertical: 3,
+    paddingHorizontal: 7,
+    borderRadius: 10,
+    fontSize: 10,
+  },
+  lineContainer: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    marginTop: -25,
+  },
+  line: {
+    flex: 1,
+    borderBottomColor: '#263238',
+    borderBottomWidth: 2,
+    borderRadius: 10,
+  },
+  dotContainer: {
+    flex: 1,
+    width: 360,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  smallDot: {
+    width: 10,
+    height: 10,
+    backgroundColor: '#263238',
+    borderRadius: 5,
+    marginTop: -7,
+  },
+  outerBigDot: {
+    width: 20,
+    height: 20,
+    backgroundColor: '#263238',
+    borderRadius: 10,
+    marginTop: -12,
+  },
+  innerBigDot: {
+    width: 10,
+    height: 10,
+    backgroundColor: '#4caf50',
+    borderRadius: 5,
+    marginTop: -15,
+    marginLeft: 5,
+  },
+  content: {
+    paddingLeft: 7,
+    marginTop: 10,
   },
   version: {
     flex: 1,
