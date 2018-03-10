@@ -69,11 +69,11 @@ class Drawer extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Image
-          source={require('../images/bg_banner.jpg')}
-          style={styles.imageHeader} />
-
         <ScrollView>
+          <Image
+            source={require('../images/bg_banner.jpg')}
+            style={styles.imageHeader} />
+
           <TouchableOpacity
             style={this.getStyle(screen0)}
             onPress={() => this.toPage('screen.Schedule', 'screen0')}>
