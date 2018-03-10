@@ -1,3 +1,4 @@
+/* eslint camelcase:0 */
 import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text, Image, StatusBar, Linking, Dimensions, Alert, BackHandler, TouchableOpacity, StyleSheet } from 'react-native';
@@ -11,6 +12,7 @@ import { resetDrawer, setModalVisible } from '../actions/directive';
 
 const { height, width } = Dimensions.get('window');
 const heightHeader = (height / 4) + 30;
+const widthFooter = width - 20;
 
 class Account extends React.Component {
   static propTypes = {
@@ -180,6 +182,8 @@ class Account extends React.Component {
   )
 
   render() {
+    const { alamat, jurusan, ttl, tahun_masuk } = this.props.user; // eslint-disable-line
+
     return (
       <Container>
         <StatusBarComp />
@@ -207,7 +211,7 @@ class Account extends React.Component {
               <Text style={styles.heading}>• </Text>
               <Text style={styles.headingText}>ADDRESS</Text>
             </Text>
-            <Text style={styles.headingContent}>{this.props.user.alamat}</Text>
+            <Text style={styles.headingContent}>{alamat}</Text>
           </View>
 
           <View style={styles.padding15}>
@@ -215,7 +219,7 @@ class Account extends React.Component {
               <Text style={styles.heading}>• </Text>
               <Text style={styles.headingText}>PROGRAM STUDI</Text>
             </Text>
-            <Text style={styles.headingContent}>{this.props.user.jurusan}</Text>
+            <Text style={styles.headingContent}>{jurusan}</Text>
           </View>
 
           <View style={styles.padding15}>
@@ -223,7 +227,7 @@ class Account extends React.Component {
               <Text style={styles.heading}>• </Text>
               <Text style={styles.headingText}>TAHUN MASUK</Text>
             </Text>
-            <Text style={styles.headingContent}>{this.props.user.tahun_masuk}</Text>
+            <Text style={styles.headingContent}>{tahun_masuk}</Text>
           </View>
 
           <View style={styles.padding15}>
@@ -231,9 +235,15 @@ class Account extends React.Component {
               <Text style={styles.heading}>• </Text>
               <Text style={styles.headingText}>TEMPAT, TGL LAHIR</Text>
             </Text>
-            <Text style={styles.headingContent}>{this.props.user.ttl}</Text>
+            <Text style={styles.headingContent}>{ttl}</Text>
           </View>
+
         </Content>
+        <TouchableOpacity
+          style={styles.logout}
+          onPress={() => this.handleBackPress(true)} >
+          <Text style={styles.logoutText}>LOGOUT</Text>
+        </TouchableOpacity>
       </Container >
     );
   }
@@ -375,15 +385,15 @@ const styles = StyleSheet.create({
     color: '#B3B3B3',
   },
   logout: {
-    flex: 1,
-    backgroundColor: '#fff',
-    height: 50,
-    flexDirection: 'row',
-    alignItems: 'center',
+    width: widthFooter,
+    backgroundColor: '#F44336',
+    marginHorizontal: 10,
+    position: 'absolute',
+    bottom: 10,
   },
   logoutText: {
-    flex: 1,
+    padding: 10,
+    color: '#fff',
     textAlign: 'center',
-    color: 'red',
   },
 });
