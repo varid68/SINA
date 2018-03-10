@@ -186,22 +186,55 @@ class Account extends React.Component {
         {this.renderHeader()}
         {this.renderName()}
 
-        <Content style={{ backgroundColor: '#eee' }}>
-          <View style={styles.version}>
-            <Text style={{ flex: 1 }}>About</Text>
-            <Text style={{ flex: 1, textAlign: 'right' }}>Version 2.0.0</Text>
+        <Content style={{ backgroundColor: '#f4f4f4' }}>
+          <View style={styles.classContainer}>
+            <View style={styles.class}>
+              <Icon name="ios-book-outline" />
+              <Text style={{ fontSize: 13 }}>class</Text>
+            </View>
+            <View style={styles.class}>
+              <Icon name="ios-pin-outline" />
+              <Text style={{ fontSize: 13 }}>location</Text>
+            </View>
+            <View style={styles.class}>
+              <Icon name="ios-call-outline" />
+              <Text style={{ fontSize: 13 }}>phone</Text>
+            </View>
           </View>
-          <View style={styles.language}>
-            <Text stylw={{ flex: 1 }}>Language</Text>
-            <Text style={{ flex: 1, textAlign: 'right' }}>English</Text>
+
+          <View style={styles.padding15}>
+            <Text>
+              <Text style={styles.heading}>• </Text>
+              <Text style={styles.headingText}>ADDRESS</Text>
+            </Text>
+            <Text style={styles.headingContent}>{this.props.user.alamat}</Text>
           </View>
-          <TouchableOpacity
-            style={styles.logout}
-            onPress={() => this.handleBackPress(true)}>
-            <Text style={styles.logoutText}>Logout</Text>
-          </TouchableOpacity>
+
+          <View style={styles.padding15}>
+            <Text>
+              <Text style={styles.heading}>• </Text>
+              <Text style={styles.headingText}>PROGRAM STUDI</Text>
+            </Text>
+            <Text style={styles.headingContent}>{this.props.user.jurusan}</Text>
+          </View>
+
+          <View style={styles.padding15}>
+            <Text>
+              <Text style={styles.heading}>• </Text>
+              <Text style={styles.headingText}>TAHUN MASUK</Text>
+            </Text>
+            <Text style={styles.headingContent}>{this.props.user.tahun_masuk}</Text>
+          </View>
+
+          <View style={styles.padding15}>
+            <Text>
+              <Text style={styles.heading}>• </Text>
+              <Text style={styles.headingText}>TEMPAT, TGL LAHIR</Text>
+            </Text>
+            <Text style={styles.headingContent}>{this.props.user.ttl}</Text>
+          </View>
         </Content>
-      </Container>
+      </Container >
     );
   }
 }
@@ -310,23 +343,36 @@ const styles = StyleSheet.create({
     paddingLeft: 7,
     marginTop: 10,
   },
-  version: {
+  classContainer: {
     flex: 1,
     flexDirection: 'row',
-    height: 50,
-    marginBottom: 1,
-    backgroundColor: '#fff',
-    padding: 10,
-    alignItems: 'center',
+    backgroundColor: '#fafafa',
+    elevation: 5,
   },
-  language: {
+  class: {
     flex: 1,
-    flexDirection: 'row',
-    height: 50,
-    marginBottom: 20,
-    backgroundColor: '#fff',
-    padding: 10,
+    flexDirection: 'column',
+    justifyContent: 'center',
     alignItems: 'center',
+    padding: 10,
+  },
+  padding15: {
+    paddingHorizontal: 15,
+    paddingTop: 15,
+  },
+  heading: {
+    fontSize: 20,
+    paddingTop: 2,
+    color: '#000',
+  },
+  headingText: {
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  headingContent: {
+    paddingLeft: 15,
+    paddingTop: 5,
+    color: '#B3B3B3',
   },
   logout: {
     flex: 1,
