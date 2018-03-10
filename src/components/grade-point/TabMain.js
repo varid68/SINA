@@ -15,18 +15,82 @@ export default class TabMain extends React.Component {
     third: 0,
     left: 0,
     selectedSemester: 'I',
+    list: [],
   };
 
   componentWillMount() {
-    // const result = [...this.props.point.reduce((mp, o) => {
-    //   if (!mp.has(o.semester)) mp.set(o.semester, Object.assign({ length: 0 }, o));
-    //   mp.get(o.semester).length += 1;
-    //   return mp;
-    // }, new Map()).values()];
+    const { point } = this.props;
 
-    // const key = result.map(item => item.semester);
+    const result = [...point.reduce((mp, o) => {
+      if (!mp.has(o.semester)) mp.set(o.semester, Object.assign({ length: 0 }, o));
+      mp.get(o.semester).length += 1;
+      return mp;
+    }, new Map()).values()];
+
+    const key = result.map(item => item.semester);
     // const val = result.map(item => item.length);
     // const a = Object.assign({}, ...key.map((n, index) => ({ [n]: val[index] })));
+    switch (key.length) {
+      case 1: {
+        const I = point.filter(item => item.semester == 'I');
+        const list = [...I];
+        this.setState({ list });
+        break;
+      }
+
+      case 2: {
+        const I = point.filter(item => item.semester == 'I');
+        const II = point.filter(item => item.semester == 'II');
+        const list = [...I, ...II];
+        this.setState({ list });
+        break;
+      }
+
+      case 3: {
+        const I = point.filter(item => item.semester == 'I');
+        const II = point.filter(item => item.semester == 'II');
+        const A1 = point.filter(item => item.semester == 'Akselerasi I');
+        const list = [...I, ...II, ...A1];
+        this.setState({ list });
+        break;
+      }
+
+      case 4: {
+        const I = point.filter(item => item.semester == 'I');
+        const II = point.filter(item => item.semester == 'II');
+        const A1 = point.filter(item => item.semester == 'Akselerasi I');
+        const III = point.filter(item => item.semester == 'III');
+        const list = [...I, ...II, ...A1, ...III];
+        this.setState({ list });
+        break;
+      }
+
+      case 5: {
+        const I = point.filter(item => item.semester == 'I');
+        const II = point.filter(item => item.semester == 'II');
+        const A1 = point.filter(item => item.semester == 'Akselerasi I');
+        const III = point.filter(item => item.semester == 'III');
+        const IV = point.filter(item => item.semester == 'IV');
+        const list = [...I, ...II, ...A1, ...III, ...IV];
+        this.setState({ list });
+        break;
+      }
+
+      case 6: {
+        const I = point.filter(item => item.semester == 'I');
+        const II = point.filter(item => item.semester == 'II');
+        const A1 = point.filter(item => item.semester == 'Akselerasi I');
+        const III = point.filter(item => item.semester == 'III');
+        const IV = point.filter(item => item.semester == 'IV');
+        const A2 = point.filter(item => item.semester == 'Akselerasi II');
+        const list = [...I, ...II, ...A1, ...III, ...IV, ...A2];
+        this.setState({ list });
+        break;
+      }
+
+      default:
+        break;
+    }
   }
 
   onLayout = (e) => {
@@ -82,8 +146,8 @@ export default class TabMain extends React.Component {
   );
 
   render() {
-    const { point, fetching } = this.props;
-    const { selectedSemester } = this.state;
+    const { fetching } = this.props;
+    const { selectedSemester, list, left } = this.state;
 
     return (
       <View>
@@ -91,7 +155,7 @@ export default class TabMain extends React.Component {
           <Text>Loading...</Text> :
           <View>
             <FlatList
-              data={point}
+              data={list}
               renderItem={
                 ({ index, item }) => this.renderListItem(index, item)
               }
@@ -99,7 +163,7 @@ export default class TabMain extends React.Component {
               keyExtractor={item => item.id_matkul}
               extraData={this.props} />
             <View
-              style={[styles.notifContainer, { left: this.state.left }]}
+              style={[styles.notifContainer, { left }]}
               onLayout={e => this.onLayout(e)} >
               <Text style={styles.notifContent}>SEMESTER {selectedSemester}</Text>
             </View>
