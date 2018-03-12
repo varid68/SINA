@@ -118,13 +118,28 @@ export default class TabMain extends React.Component {
   checking = (e) => {
     const scroll = e.nativeEvent.contentOffset.y;
     if (scroll > 0 && scroll < 400 && this.state.first == 0) {
-      this.setState({ first: 1, second: 0, third: 0, selectedSemester: 'I' });
+      this.setState({
+        first: 1,
+        second: 0,
+        third: 0,
+        selectedSemester: 'I',
+      });
     }
     if (scroll > 400 && scroll < 850 && this.state.second == 0) {
-      this.setState({ first: 0, second: 1, third: 0, selectedSemester: 'AKSELERASI I' });
+      this.setState({
+        first: 0,
+        second: 1,
+        third: 0,
+        selectedSemester: 'AKSELERASI I',
+      });
     }
     if (scroll > 850 && this.state.third == 0) {
-      this.setState({ first: 0, second: 0, third: 1, selectedSemester: 'III' });
+      this.setState({
+        first: 0,
+        second: 0,
+        third: 1,
+        selectedSemester: 'III',
+      });
     }
   }
 

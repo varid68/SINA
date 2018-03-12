@@ -1,3 +1,4 @@
+/* eslint camelcase: 0 */
 import React from 'react';
 import { View, Text, FlatList, Image, Dimensions, StyleSheet } from 'react-native';
 import { Button, Icon } from 'native-base';
@@ -26,14 +27,12 @@ export default class TabLocal extends React.Component {
   }
 
   onLayout = (event) => {
-    const widthScreen = Dimensions.get('window').width;
-    const left = (widthScreen - event.nativeEvent.layout.width) / 2;
+    const left = (width - event.nativeEvent.layout.width) / 2;
     this.setState({ left });
   }
 
   onLayout2 = (event) => {
-    const widthScreen = Dimensions.get('window').width;
-    const right = (widthScreen - event.nativeEvent.layout.width) / 2;
+    const right = (width - event.nativeEvent.layout.width) / 2;
     this.setState({ right });
   }
 
@@ -65,23 +64,31 @@ export default class TabLocal extends React.Component {
     this.setState({ modalVisibility: false });
   }
 
-  renderListItem = (index, item) => (
-    <View style={styles.listItemContainer}>
-      <View style={{ flex: 2 }}>
-        <Text style={styles.idMatkul}>{item.id_matkul}</Text>
-        <Text style={styles.matkul}>{item.mata_kuliah.toUpperCase()}{'\n'}</Text>
-        <Text style={styles.sks}>SKS: {item.sks.toUpperCase()} ••••• SEMESTER: {item.semester.toUpperCase()}</Text>
+  renderListItem = (index, item) => {
+    const { id_matkul, mata_kuliah } = item;
+    const { sks, semester, nilai_akhir } = item;
+
+    return (
+      <View style={styles.listItemContainer}>
+        <View style={{ flex: 2 }}>
+          <Text style={styles.idMatkul}>{id_matkul}</Text>
+          <Text style={styles.matkul}>{mata_kuliah.toUpperCase()}{'\n'}</Text>
+          <Text style={styles.sks}>SKS: {sks.toUpperCase()}
+            ••••• SEMESTER: {semester.toUpperCase()}
+          </Text>
+        </View>
+        <View style={styles.imageContainer}>
+          <Image
+            source={this.getGradeImage(nilai_akhir)}
+            style={styles.image} />
+        </View>
       </View>
-      <View style={styles.imageContainer}>
-        <Image
-          source={this.getGradeImage(item.nilai_akhir)}
-          style={styles.image} />
-      </View>
-    </View>
-  );
+    );
+  }
 
   render() {
-    const { fetching, point, user, changeSemester, selectedSemester } = this.props;
+    const { fetching, point, user } = this.props;
+    const { changeSemester, selectedSemester } = this.props;
     const { isScrolling, modalVisibility } = this.state;
 
     return (
