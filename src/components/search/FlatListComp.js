@@ -15,6 +15,7 @@ class FlatListComp extends React.Component {
   state = {
     isVisible: false,
     isEmpty: false,
+    isScrolling: false,
   };
 
   componentWillReceiveProps(nextProps) {
@@ -30,6 +31,10 @@ class FlatListComp extends React.Component {
   closeModal = () => this.setState({ isVisible: false });
 
   toggleModal = () => this.setState({ isVisible: !this.state.isVisible });
+
+  beginScroll = () => this.setState({ isScrolling: true });
+
+  endScroll = () => this.setState({ isScrolling: false });
 
   randImage = () => {
     const source = [require('../../images/one.png'), require('../../images/two.png'), require('../../images/three.png')];
@@ -72,16 +77,19 @@ class FlatListComp extends React.Component {
 
   render() {
     const { fetching, listSchedule } = this.props;
+    const { isEmpty, isScrolling } = this.state;
 
     return (
       <Container>
-        {this.state.isEmpty ?
+        {isEmpty ?
           <Text style={{ textAlign: 'center' }}>Tidak ada Hasil..</Text> :
           null
         }
         {fetching ?
           <Text>Loading..</Text> :
           <FlatList
+            onScrollBeginDrag={this.beginScroll}
+            onScrollEndDrag={this.endScroll}
             data={listSchedule}
             renderItem={
               ({ index, item }) => this.renderListItem(index, item)
@@ -94,7 +102,7 @@ class FlatListComp extends React.Component {
           {...this.props}
           closeModal={this.closeModal}
           isVisible={this.state.isVisible} />
-        {this.renderFab()}
+        {!isScrolling ? this.renderFab() : null}
       </Container>
     );
   }
