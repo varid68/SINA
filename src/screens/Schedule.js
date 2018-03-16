@@ -1,4 +1,4 @@
-/* eslint class-methods-use-this: 0 */
+/* eslint no-console: 0, class-methods-use-this:0  */
 import React from 'react';
 import { connect } from 'react-redux';
 import { Container } from 'native-base';
@@ -35,7 +35,7 @@ class Schedule extends React.Component {
   }
 
   onReceived(notification) {
-    console.log("Notification received: ", notification);
+    console.log('Notification received: ', notification);
   }
 
   onOpened(openResult) {
@@ -46,7 +46,7 @@ class Schedule extends React.Component {
   }
 
   onRegistered(notifData) {
-    console.log("Device had been registered for push notifications!", notifData);
+    console.log('Device had been registered for push notifications!', notifData);
   }
 
   onIds(device) {

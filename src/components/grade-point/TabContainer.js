@@ -1,3 +1,4 @@
+/* eslint max-len:0 */
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Tabs, Tab } from 'native-base';
@@ -28,28 +29,8 @@ export default class TabContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let semester = null;
-    switch (this.props.user.semester) {
-      case 'I': semester = null;
-        break;
-
-      case 'II': semester = 'I';
-        break;
-
-      case 'Akselerasi I': semester = 'II';
-        break;
-
-      case 'III': semester = 'Akselerasi I';
-        break;
-
-      case 'IV': semester = 'III';
-        break;
-
-      default: semester = 'IV';
-        break;
-    }
-
-    if (this.props.point != nextProps.point || this.props.selectedSemester != nextProps.selectedSemester) {
+    const { point, selectedSemester } = this.props;
+    if (point != nextProps.point || selectedSemester != nextProps.selectedSemester) {
       if (nextProps.point.length > 0) {
         const filtered = nextProps.point.filter(item => item.semester == nextProps.selectedSemester);
         this.setState({
@@ -62,7 +43,10 @@ export default class TabContainer extends React.Component {
 
   render() {
     const { point, filteredPoint } = this.state;
-    const { fetching, user, selectedSemester, changeSemester } = this.props;
+    const {
+      fetching, user,
+      selectedSemester, changeSemester,
+    } = this.props;
 
     return (
       <Tabs
