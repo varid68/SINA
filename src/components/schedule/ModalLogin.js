@@ -28,8 +28,8 @@ export default class ModalLogin extends React.Component {
 
   checkValid = () => {
     const { username, password } = this.state;
-    if (username == '' && password == '') this.setState({ isEmpty: true });
-    else this.setState({ isEmpty: false });
+    const isEmpty = username == '' || password == '';
+    this.setState({ isEmpty });
   }
 
   handleDone = () => {
@@ -119,10 +119,14 @@ export default class ModalLogin extends React.Component {
                 }} />
             </Item>
             {showPassword ?
-              <TouchableOpacity onPress={this.togglePassword} style={{ marginTop: -30, alignSelf: 'flex-end' }}>
+              <TouchableOpacity
+                onPress={this.togglePassword}
+                style={{ marginTop: -30, alignSelf: 'flex-end' }}>
                 <Icon name="eye-off" />
               </TouchableOpacity> :
-              <TouchableOpacity onPress={this.togglePassword} style={{ marginTop: -30, alignSelf: 'flex-end' }}>
+              <TouchableOpacity
+                onPress={this.togglePassword}
+                style={{ marginTop: -30, alignSelf: 'flex-end' }}>
                 <Icon name="eye" />
               </TouchableOpacity>
             }
