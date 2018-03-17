@@ -6,7 +6,9 @@ import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import ModalFilter from './ModalFilter';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
+const heightLoader = height - (25 + (height / 5) + 50 + 72);
+
 export default class TabLocal extends React.Component {
   static propTypes = {
     fetching: PropTypes.bool.isRequired,
@@ -94,7 +96,9 @@ export default class TabLocal extends React.Component {
     return (
       <View>
         {fetching ?
-          <Text>Loading...</Text> :
+          <View style={styles.loaderContainer}>
+            <Image source={require('../../images/loader.gif')} />
+          </View> :
           <View>
             <FlatList
               data={point}
@@ -164,6 +168,11 @@ const styles = StyleSheet.create({
   image: {
     width: 60,
     height: 60,
+  },
+  loaderContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: heightLoader,
   },
   notifContainer: {
     backgroundColor: '#4caf50',

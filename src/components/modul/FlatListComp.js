@@ -129,7 +129,7 @@ class FlatListComp extends React.Component {
               keyExtractor={item => item.id}
               extraData={this.props} /> :
             <View style={styles.emptyContainer}>
-              <Image source={require('../../images/loading.gif')} />
+              <Image source={require('../../images/loader.gif')} />
             </View>
           }
         </Content>

@@ -20,7 +20,7 @@ export default class TimeLine extends Component {
       <View style={styles.container}>
         {this.props.fetching ?
           <View style={styles.emptyContainer}>
-            <Image source={require('../../images/loading.gif')} />
+            <Image source={require('../../images/loader.gif')} />
           </View> :
           <Timeline
             style={styles.list}
