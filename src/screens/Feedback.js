@@ -41,10 +41,6 @@ class Feedback extends React.Component {
     }
   }
 
-  handleBackButton = () => {
-    this.props.resetDrawer();
-  }
-
   handleBackPress = () => {
     this.props.navigator.popToRoot({
       animated: false,
