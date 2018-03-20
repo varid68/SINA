@@ -10,6 +10,7 @@ import Header from '../components/MyHeader';
 import Content from '../components/ngampus/Content';
 
 import { resetDrawer } from '../actions/directive';
+import { fetchIndeks } from '../actions/provider';
 
 class Ngampus extends React.Component {
   static propTypes = {
@@ -62,19 +63,24 @@ class Ngampus extends React.Component {
         <StatusBarComp />
         <Header
           {...this.props}
-          title="Ngampus"
+          title="Grafik nilai"
           fromTab />
-        <Content />
+        <Content {...this.props} />
       </Container>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  ip: state.providerReducer.indeks.indeks_prestasi,
+});
+
 const mapDispatchToProp = dispatch => ({
   resetDrawer: () => dispatch(resetDrawer()),
+  fetchIndeks: () => dispatch(fetchIndeks()),
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProp,
 )(Ngampus);

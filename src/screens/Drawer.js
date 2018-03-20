@@ -114,9 +114,9 @@ class Drawer extends React.Component {
             style={this.getStyle(screen4)}
             onPress={() => this.toPage('screen.Ngampus', 'screen4')}>
             <Image
-              source={require('../images/ngampus.png')}
+              source={require('../images/grafik.png')}
               style={styles.imageIcon} />
-            <Text style={this.getStyleText(screen4, '#039be5')}>Ngampus</Text>
+            <Text style={this.getStyleText(screen4, '#039be5')}>Grafik</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
