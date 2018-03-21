@@ -14,8 +14,18 @@ buildscript {
     }
 }
 
+def googlePlayServicesVersion = '11.6.0'
+
 allprojects {
     repositories {
+        configurations.all {
+            resolutionStrategy {
+                // react-native-onesignal
+                force "com.google.android.gms:play-services-gcm:$googlePlayServicesVersion"
+                force "com.google.android.gms:play-services-analytics:$googlePlayServicesVersion"
+                force "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
+            }
+        }
         mavenLocal()
         jcenter()
         maven {
