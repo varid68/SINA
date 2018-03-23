@@ -24,6 +24,19 @@ export default class FlatListComp extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.list != nextProps.list) {
+      if (nextProps.list.length > 1) {
+        const awal = nextProps.list.filter(item => item.pukul == '08:00-09:30');
+        const akhir = nextProps.list.filter(item => item.pukul == '10:00-11:30');
+        const join = awal.concat(akhir);
+        this.setState({ list: join });
+      } else {
+        this.setState({ list: nextProps.list });
+      }
+    }
+  }
+
   renderListItem = (index, item) => (
     <View style={styles.containerListItem}>
       <View style={{ flex: 0 }}>
@@ -65,7 +78,7 @@ export default class FlatListComp extends React.Component {
               ({ index, item }) => this.renderListItem(index, item)
             }
             keyExtractor={item => item.id_matkul}
-            extraData={this.props} />
+            extraData={this.state} />
         }
       </View>
     );

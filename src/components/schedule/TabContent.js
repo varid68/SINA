@@ -37,7 +37,9 @@ export default class TabContent extends React.Component {
       <View>
         {this.props.fetching ?
           <View style={{ justifyContent: 'center', alignItems: 'center', height: heightLoading }}>
-            <Image source={require('../../images/loading.gif')} style={{ height: 30, width: 30 }} />
+            <Image
+              source={require('../../images/loader.gif')}
+              style={{ height: 30, width: 30 }} />
           </View> :
           <FlatList list={schedule} />
         }

@@ -18,14 +18,14 @@ class TabContainer extends React.Component {
 
   state = {
     day: 0,
-    list: [],
+    dayList: [],
   }
 
   componentWillMount() {
     if (this.props.listSchedule.length < 1) this.props.fetchSchedule();
-    const list = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    const dayList = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
     const day = Number(moment().format('d')) - 1;
-    this.setState({ day, list });
+    this.setState({ day, dayList });
   }
 
   changeDate(i) {
@@ -35,14 +35,14 @@ class TabContainer extends React.Component {
   }
 
   render() {
-    const { list } = this.state;
+    const { dayList } = this.state;
 
     return (
       <Tabs
         initialPage={this.state.day}
         tabBarUnderlineStyle={styles.tabContainer}
         onChangeTab={({ i }) => this.changeDate(i)} >
-        {list.map(item => (
+        {dayList.map(item => (
           <Tab
             key={item}
             heading={item.substr(0, 3)}
