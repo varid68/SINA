@@ -1,3 +1,4 @@
+/* eslint arrow-body-style: 0 */
 import React from 'react';
 import { View, Text, Image, Dimensions, StyleSheet } from 'react-native';
 
@@ -28,10 +29,14 @@ export default class PointTotal extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.point != nextProps.point || this.props.selectedSemester != nextProps.selectedSemester) {
+    const { point, selectedSemester } = this.props;
+    const { ipk } = nextProps.indeks;
+
+    if (point != nextProps.point || selectedSemester != nextProps.selectedSemester) {
       if (nextProps.point.length > 0) {
-        const { ipk } = this.props.indeks;
-        const indeksPrestasi = this.props.indeks.indeks_prestasi.filter(item => item.semester == nextProps.selectedSemester).map(item => item.ip);
+        const indeksPrestasi = nextProps.indeks.indeks_prestasi.filter((item) => {
+          return item.semester == nextProps.selectedSemester;
+        }).map(item => item.ip);
         const totalSks = nextProps.point.reduce((a, b) => {
           const toNumber = Number(b.sks);
           return a + toNumber;

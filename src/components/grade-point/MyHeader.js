@@ -36,7 +36,7 @@ export default class MyHeader extends React.Component {
 
   beriBintang = () => {
     const url = 'https://play.google.com/store/apps/details?id=name.ratson.uiexplorer';
-    Linking.openURL(url).catch(err => console.error('An error occurred', err));
+    Linking.openURL(url).catch();
   }
 
   toggleDrawer = () => {
