@@ -188,19 +188,22 @@ const styles = StyleSheet.create({
   fabContainer: {
     position: 'absolute',
     bottom: 5,
+    height: 33,
     paddingTop: 0,
+    paddingLeft: 5,
+    paddingRight: 5,
     paddingBottom: 0,
-    height: 30,
-    borderRadius: 20,
+    borderRadius: 17,
     backgroundColor: '#C51665',
   },
   filterIcon: {
     marginLeft: 10,
     marginRight: 5,
-    fontSize: 20,
+    fontSize: 28,
   },
   filterText: {
     color: '#fff',
+    fontSize: 16,
     marginRight: 10,
   },
 });
