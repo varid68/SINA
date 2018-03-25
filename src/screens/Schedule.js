@@ -70,6 +70,7 @@ class Schedule extends React.Component {
 const mapStateToProps = state => ({
   date: state.directiveReducer.dateTab,
   isVisible: state.directiveReducer.isVisible,
+  error: state.providerReducer.error,
 });
 
 const mapDispatchToProps = dispatch => ({

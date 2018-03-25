@@ -22,7 +22,6 @@ class TabContainer extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.listSchedule.length < 1) this.props.fetchSchedule();
     const dayList = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
     const day = Number(moment().format('d')) - 1;
     this.setState({ day, dayList });

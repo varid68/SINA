@@ -11,7 +11,7 @@ const initialState = {
   filteredIndeks: [],
   calendar: [],
   fetching: false,
-  error: null,
+  error: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -25,6 +25,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         fetching: false,
         listNews: action.payload.data.list,
+        error: '',
       };
       break;
 
@@ -45,6 +46,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         fetching: false,
         calendar: action.payload.data,
+        error: '',
       };
       break;
 
@@ -66,6 +68,7 @@ const reducer = (state = initialState, action) => {
         fetching: false,
         listModul: action.payload.data,
         filteredListModul: action.payload.data,
+        error: '',
       };
       break;
 
@@ -87,6 +90,7 @@ const reducer = (state = initialState, action) => {
         fetching: false,
         listSchedule: action.payload.data,
         filteredListSchedule: action.payload.data,
+        error: '',
       };
       break;
 
@@ -107,6 +111,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         fetching: false,
         point: action.payload.data,
+        error: '',
       };
       break;
 
@@ -127,6 +132,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         fetching: false,
         indeks: action.payload.data,
+        error: '',
       };
       break;
 

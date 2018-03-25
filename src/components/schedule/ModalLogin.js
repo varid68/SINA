@@ -1,6 +1,9 @@
 /* eslint no-unused-expressions: 0 */
 import React from 'react';
-import { View, Text, Modal, Image, TouchableOpacity, StatusBar, ToastAndroid, Keyboard, StyleSheet } from 'react-native';
+import {
+  View, Text, Modal, Image, TouchableOpacity,
+  StatusBar, ToastAndroid, Keyboard, StyleSheet,
+} from 'react-native';
 import { Container, Form, Label, Item, Input, Button, Icon } from 'native-base';
 
 import axios from 'axios';
@@ -12,6 +15,7 @@ export default class ModalLogin extends React.Component {
     setModalVisible: PropTypes.func.isRequired,
     fetchSchedule: PropTypes.func.isRequired,
     storeUser: PropTypes.func.isRequired,
+    error: PropTypes.any.isRequired,
   }
 
   state = {
@@ -21,6 +25,14 @@ export default class ModalLogin extends React.Component {
     isLoading: false,
     isEmpty: true,
   };
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.error != nextProps.error) {
+      if (nextProps.error != null) {
+        this.showToast('Sepertinya server kami mengalami masalah..');
+      }
+    }
+  }
 
   togglePassword = () => {
     this.setState({ showPassword: !this.state.showPassword });
@@ -35,7 +47,6 @@ export default class ModalLogin extends React.Component {
   handleDone = () => {
     Keyboard.dismiss();
     this.setState({ isLoading: true });
-
     const data = {
       username: this.state.username,
       password: this.state.password,
@@ -47,8 +58,9 @@ export default class ModalLogin extends React.Component {
       data,
     }).then((response) => {
       this.setState({ isLoading: false });
-      if (response.data == 'Wrong Password') this.showToast();
-      else {
+      if (response.data == 'Wrong Password') {
+        this.showToast('Kombinasi Username & Password salah!');
+      } else {
         setModalVisible();
         fetchSchedule();
         storeUser(response.data);
@@ -56,9 +68,9 @@ export default class ModalLogin extends React.Component {
     });
   }
 
-  showToast = () => {
+  showToast = (text) => {
     ToastAndroid.showWithGravityAndOffset(
-      'Kombinasi Username & Password salah!',
+      text,
       ToastAndroid.LONG,
       ToastAndroid.BOTTOM,
       25,
