@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, Image, Text, FlatList, StyleSheet } from 'react-native';
-import { Container, Button, Icon } from 'native-base';
+import { View, Image, Text, FlatList, Animated, TouchableOpacity, Easing, StyleSheet } from 'react-native';
+import { Container, Icon } from 'native-base';
 
 import PropTypes from 'prop-types';
 import ModalFilter from './ModalFilter';
@@ -15,7 +15,10 @@ class FlatListComp extends React.Component {
   state = {
     isVisible: false,
     isEmpty: false,
-    isScrolling: false,
+    translateY: new Animated.Value(0),
+    offset: 0,
+    upLimiter: 0,
+    downLimiter: 0,
   };
 
   componentWillReceiveProps(nextProps) {
@@ -32,26 +35,65 @@ class FlatListComp extends React.Component {
 
   toggleModal = () => this.setState({ isVisible: !this.state.isVisible });
 
-  beginScroll = () => this.setState({ isScrolling: true });
-
-  endScroll = () => this.setState({ isScrolling: false });
-
   randImage = () => {
     const source = [require('../../images/one.png'), require('../../images/two.png'), require('../../images/three.png')];
     const random = source[Math.floor(Math.random() * source.length)];
     return random;
   }
 
+  downToUp = () => {
+    Animated.timing(
+      this.state.translateY,
+      {
+        toValue: 100,
+        easing: Easing.bounce,
+        duration: 500,
+      },
+    ).start();
+  }
 
-  renderFab = () => (
-    <Button
-      onPress={this.toggleModal}
-      style={styles.fab}>
-      <Icon
-        name="md-funnel"
-        style={styles.fabIcon} />
-    </Button>
-  );
+  UpToDown = () => {
+    Animated.timing(
+      this.state.translateY,
+      {
+        toValue: 0,
+        easing: Easing.bounce,
+        duration: 500,
+      },
+    ).start();
+  }
+
+  scroll = (event) => {
+    const currentOffset = event.nativeEvent.contentOffset.y;
+    const direction = currentOffset > this.state.offset ? 'down' : 'up';
+    this.state.offset = currentOffset;
+    if (direction == 'up' && this.state.upLimiter == 0) {
+      this.UpToDown();
+      this.setState({ upLimiter: 1, downLimiter: 0 });
+    }
+    if (direction == 'down' && this.state.downLimiter == 0) {
+      this.downToUp();
+      this.setState({ downLimiter: 1, upLimiter: 0 });
+    }
+  }
+
+  renderFab = () => {
+    const animation = {
+      transform: [{ translateY: this.state.translateY }],
+    };
+
+    return (
+      <Animated.View style={[styles.view, animation]}>
+        <TouchableOpacity
+          style={styles.fab}
+          onPress={() => this.toggleModal}>
+          <Icon
+            name="funnel"
+            style={{ color: '#fff' }} />
+        </TouchableOpacity>
+      </Animated.View>
+    );
+  }
 
   renderListItem = (index, item) => (
     <View style={styles.containerListItem}>
@@ -66,9 +108,9 @@ class FlatListComp extends React.Component {
         <Text style={styles.dosen}>{item.nama}</Text>
         <Text style={styles.hari}>Semester {item.semester} ••••• {item.hari}</Text>
       </View>
-      <View style={styles.pukulContainer}>
-        <Text style={styles.pukul}>{item.pukul}</Text>
-        <View style={{ height: 55, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={styles.hourContainer}>
+        <Text style={styles.hour}>{item.pukul}</Text>
+        <View style={styles.classroomContainer}>
           <Text style={{ fontSize: 20 }}>{item.ruang}</Text>
         </View>
       </View>
@@ -77,7 +119,7 @@ class FlatListComp extends React.Component {
 
   render() {
     const { fetching, listSchedule } = this.props;
-    const { isEmpty, isScrolling } = this.state;
+    const { isEmpty, isVisible } = this.state;
 
     return (
       <Container>
@@ -88,21 +130,20 @@ class FlatListComp extends React.Component {
         {fetching ?
           <Text>Loading..</Text> :
           <FlatList
-            onScrollBeginDrag={this.beginScroll}
-            onScrollEndDrag={this.endScroll}
             data={listSchedule}
             renderItem={
               ({ index, item }) => this.renderListItem(index, item)
             }
             keyExtractor={item => item.id_matkul}
+            onScroll={this.scroll}
             extraData={this.props} />
         }
 
         <ModalFilter
           {...this.props}
           closeModal={this.closeModal}
-          isVisible={this.state.isVisible} />
-        {!isScrolling ? this.renderFab() : null}
+          isVisible={isVisible} />
+        {this.renderFab()}
       </Container>
     );
   }
@@ -157,28 +198,34 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#3D8C40',
   },
-  pukulContainer: {
+  hourContainer: {
     flex: 0,
     flexDirection: 'column',
   },
-  pukul: {
+  hour: {
     fontSize: 11,
     textAlign: 'right',
   },
-  fab: {
+  classroomContainer: {
     height: 55,
-    width: 55,
-    position: 'absolute',
-    bottom: 15,
-    right: 15,
-    backgroundColor: '#409944',
-    borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  fabIcon: {
-    marginLeft: 0,
-    marginRight: 0,
-    fontSize: 30,
+  view: {
+    position: 'absolute',
+    width: 60,
+    height: 60,
+    bottom: 20,
+    right: 20,
+    backgroundColor: 'green',
+    borderRadius: 30,
+  },
+  fab: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
