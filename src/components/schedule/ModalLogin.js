@@ -15,7 +15,7 @@ export default class ModalLogin extends React.Component {
     setModalVisible: PropTypes.func.isRequired,
     fetchSchedule: PropTypes.func.isRequired,
     storeUser: PropTypes.func.isRequired,
-    error: PropTypes.any.isRequired,
+    error: PropTypes.any,
   }
 
   state = {
@@ -28,7 +28,7 @@ export default class ModalLogin extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.error != nextProps.error) {
-      if (nextProps.error != null) {
+      if (nextProps.error != '') {
         this.showToast('Sepertinya server kami mengalami masalah..');
       }
     }
@@ -65,6 +65,9 @@ export default class ModalLogin extends React.Component {
         fetchSchedule();
         storeUser(response.data);
       }
+    }).catch(() => {
+      this.setState({ isLoading: false });
+      this.showToast('Sepertinya server kami mengalami masalah..');
     });
   }
 
@@ -161,8 +164,8 @@ export default class ModalLogin extends React.Component {
           {isLoading ?
             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
               <Image
-                source={require('../../images/loading.gif')}
-                style={{ width: 25, height: 25 }} />
+                source={require('../../images/loader.gif')}
+                style={{ width: 35, height: 35 }} />
             </View> :
             null
           }
