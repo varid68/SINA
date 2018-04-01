@@ -15,13 +15,6 @@ export function fetchCalendar() {
   };
 }
 
-export function fetchModul() {
-  return {
-    type: 'FETCH_MODUL',
-    payload: axios.get('http://chylaceous-thin.000webhostapp.com/public/modul/'),
-  };
-}
-
 export function fetchSchedule() {
   return {
     type: 'FETCH_SCHEDULE',

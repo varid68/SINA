@@ -63,9 +63,11 @@ class ModalFilter extends React.Component {
           selectedValue={this.state.selected}
           style={{ flex: 1 }}
           onValueChange={value => this.setState({ selected: value })}>
-          {this.state.semester.map((item, index) => {
-            return (<Picker.Item label={item} value={item} key={index} />);
-          })}
+          {this.state.semester.map(item => (<Picker.Item
+            label={item}
+            value={item}
+            key={item}
+          />))}
         </Picker>
       </View>
 
@@ -90,19 +92,6 @@ class ModalFilter extends React.Component {
     );
   }
 }
-
-// const mapStateToProps = state => ({
-//   listModul: state.providerReducer.listModul,
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   filterListModul: newList => dispatch(filterListModul(newList)),
-// });
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps,
-// )(ModalFilter);
 
 export default ModalFilter;
 

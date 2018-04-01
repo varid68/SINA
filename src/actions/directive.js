@@ -20,13 +20,6 @@ export function setDate(newDate) {
   };
 }
 
-export function filterListModul(newList) {
-  return {
-    type: 'FILTER_LIST_MODUL',
-    payload: newList,
-  };
-}
-
 export function filterListSchedule(newList) {
   return {
     type: 'FILTER_LIST_SCHEDULE',

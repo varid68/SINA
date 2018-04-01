@@ -11,7 +11,6 @@ const drawerWidth = width - (width / 8);
 const initialState = {
   screen0: false,
   screen1: false,
-  screen2: false,
   screen3: false,
   screen4: false,
   screen5: false,
@@ -64,7 +63,7 @@ class Drawer extends React.Component {
   }
 
   render() {
-    const { screen0, screen1, screen2, screen3 } = this.state; // eslint-disable-line
+    const { screen0, screen1, screen3 } = this.state; // eslint-disable-line
     const { screen4, screen5, screen6, screen7 } = this.state; // eslint-disable-line
 
     return (
@@ -90,15 +89,6 @@ class Drawer extends React.Component {
               source={require('../images/grade-point.png')}
               style={styles.imageIcon} />
             <Text style={this.getStyleText(screen1, '#0f9d58')}>Grade Point</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={this.getStyle(screen2)}
-            onPress={() => this.toPage('screen.Modul', 'screen2')}>
-            <Image
-              source={require('../images/library.png')}
-              style={styles.imageIcon} />
-            <Text style={this.getStyleText(screen2, '#039be5')}>Modul</Text>
           </TouchableOpacity>
 
           <TouchableOpacity

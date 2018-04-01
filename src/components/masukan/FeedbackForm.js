@@ -83,6 +83,7 @@ export default class FeedbackForm extends React.Component {
     this.setState({ isVisible: false }, () => {
       response.status == 'failed' ? this.showToast('Terjadi kesalahan..') : this.showToast('Terima kasih atas feedback anda..');
     });
+    return true;
   }
 
   showToast = (text) => {

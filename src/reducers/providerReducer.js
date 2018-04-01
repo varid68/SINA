@@ -1,8 +1,6 @@
 /* eslint no-unreachable: 0 */
 const initialState = {
   listNews: [],
-  listModul: [],
-  filteredListModul: [],
   listSchedule: [],
   filteredListSchedule: [],
   point: [],
@@ -51,28 +49,6 @@ const reducer = (state = initialState, action) => {
       break;
 
     case 'FETCH_CALENDAR_REJECTED':
-      return {
-        ...state,
-        fetching: false,
-        error: action.payload,
-      };
-      break;
-
-    case 'FETCH_MODUL_PENDING':
-      return { ...state, fetching: true };
-      break;
-
-    case 'FETCH_MODUL_FULFILLED':
-      return {
-        ...state,
-        fetching: false,
-        listModul: action.payload.data,
-        filteredListModul: action.payload.data,
-        error: '',
-      };
-      break;
-
-    case 'FETCH_MODUL_REJECTED':
       return {
         ...state,
         fetching: false,
@@ -141,14 +117,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         fetching: false,
         error: action.payload,
-      };
-      break;
-
-    case 'FILTER_LIST_MODUL':
-      return {
-        ...state,
-        filteredListModul: action.payload,
-        isFiltering: true,
       };
       break;
 
