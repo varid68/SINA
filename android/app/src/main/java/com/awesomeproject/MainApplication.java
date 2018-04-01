@@ -8,7 +8,6 @@ import io.invertase.firebase.RNFirebasePackage;
 import com.horcrux.svg.SvgPackage;
 import io.invertase.firebase.storage.RNFirebaseStoragePackage;
 import com.imagepicker.ImagePickerPackage;
-import com.RNFetchBlob.RNFetchBlobPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -36,8 +35,7 @@ public class MainApplication extends NavigationApplication {
             new RNFirebasePackage(),
             new RNFirebaseStoragePackage(),
             new ImagePickerPackage(),
-            new SvgPackage(),
-            new RNFetchBlobPackage()   
+            new SvgPackage()
          );
      }
 
