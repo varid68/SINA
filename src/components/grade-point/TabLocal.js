@@ -1,12 +1,12 @@
 /* eslint camelcase: 0 */
 import React from 'react';
-import { View, Text, FlatList, Image, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Image, Dimensions, Easing, Animated, StyleSheet } from 'react-native';
 import { Button, Icon } from 'native-base';
 
 import PropTypes from 'prop-types';
 import ModalFilter from './ModalFilter';
 
-const { width, height } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 const heightLoader = height - (25 + (height / 5) + 50 + 72);
 
 export default class TabLocal extends React.Component {
@@ -18,24 +18,19 @@ export default class TabLocal extends React.Component {
     changeSemester: PropTypes.func.isRequired,
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      isScrolling: false,
-      modalVisibility: false,
-      left: 0,
-      right: 0,
-    };
-  }
+  state = {
+    modalVisibility: false,
+    translateY: new Animated.Value(0),
+    upLimiter: 0,
+    downLimiter: 0,
+  };
 
-  onLayout = (event) => {
-    const left = (width - event.nativeEvent.layout.width) / 2;
-    this.setState({ left });
-  }
-
-  onLayout2 = (event) => {
-    const right = (width - event.nativeEvent.layout.width) / 2;
-    this.setState({ right });
+  componentWillReceiveProps(nextProps) {
+    if (this.props.point != nextProps.point) {
+      setTimeout(() => {
+        this.downToUp();
+      }, 1500);
+    }
   }
 
   getGradeImage = (Point) => {
@@ -54,16 +49,56 @@ export default class TabLocal extends React.Component {
     return image;
   }
 
+  closeModal = () => {
+    this.setState({ modalVisibility: false });
+  }
+
   beginScrolling = () => {
-    this.setState({ isScrolling: true });
+    if (this.state.downLimiter == 0) {
+      this.upToDown();
+      this.setState({ downLimiter: 1, upLimiter: 0, isScrolling: true });
+    }
   }
 
   endScrolling = () => {
-    this.setState({ isScrolling: false });
+    if (this.state.upLimiter == 0) {
+      this.downToUp();
+      this.setState({ downLimiter: 0, upLimiter: 1, isScrolling: false });
+    }
   }
 
-  closeModal = () => {
-    this.setState({ modalVisibility: false });
+  downToUp = () => {
+    Animated.timing(
+      this.state.translateY,
+      {
+        toValue: -100,
+        easing: Easing.exp,
+        duration: 200,
+      },
+    ).start();
+  }
+
+  upToDown = () => {
+    Animated.timing(
+      this.state.translateY,
+      {
+        toValue: 0,
+        duration: 300,
+      },
+    ).start();
+  }
+
+  renderFloatingText = () => {
+    const animation = {
+      transform: [{ translateY: this.state.translateY }],
+    };
+    const { selectedSemester } = this.props;
+
+    return (
+      <Animated.View style={[styles.notifContainer, animation]}>
+        <Text style={styles.notifContent}>SEMESTER {selectedSemester}</Text>
+      </Animated.View>
+    );
   }
 
   renderListItem = (index, item) => {
@@ -109,18 +144,14 @@ export default class TabLocal extends React.Component {
               extraData={this.props}
               onScrollBeginDrag={this.beginScrolling}
               onScrollEndDrag={this.endScrolling} />
-            {isScrolling ?
-              <View
-                style={[styles.notifContainer, { left: this.state.left }]}
-                onLayout={event => this.onLayout(event)}>
-                <Text style={styles.notifContent}>Semester {selectedSemester}</Text>
-              </View> : null}
+            {this.renderFloatingText()}
             {!isScrolling ?
               <Button
-                style={[styles.fabContainer, { right: this.state.right }]}
-                onLayout={e => this.onLayout2(e)}
+                style={[styles.fabContainer]}
                 onPress={() => this.setState({ modalVisibility: true })}>
-                <Icon name="ios-funnel" style={styles.filterIcon} />
+                <Icon
+                  name="ios-funnel"
+                  style={styles.filterIcon} />
                 <Text style={styles.filterText}>filter</Text>
               </Button> : null}
           </View>
@@ -175,35 +206,36 @@ const styles = StyleSheet.create({
     height: heightLoader,
   },
   notifContainer: {
-    backgroundColor: '#4caf50',
     position: 'absolute',
-    top: 5,
-    borderRadius: 12,
+    top: 10,
+    alignSelf: 'center',
+    backgroundColor: '#4caf50',
+    borderRadius: 10,
   },
   notifContent: {
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    fontSize: 12,
     color: '#fff',
-    fontSize: 10,
-    padding: 5,
   },
   fabContainer: {
     position: 'absolute',
     bottom: 5,
     height: 33,
-    paddingTop: 0,
-    paddingLeft: 5,
-    paddingRight: 5,
-    paddingBottom: 0,
-    borderRadius: 17,
+    paddingVertical: 0,
+    paddingHorizontal: 0,
+    borderRadius: 15,
+    alignSelf: 'center',
     backgroundColor: '#C51665',
   },
   filterIcon: {
-    marginLeft: 10,
+    marginLeft: 5,
     marginRight: 5,
-    fontSize: 28,
+    fontSize: 25,
   },
   filterText: {
     color: '#fff',
     fontSize: 16,
-    marginRight: 10,
+    marginRight: 5,
   },
 });
