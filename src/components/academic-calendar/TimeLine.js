@@ -16,15 +16,19 @@ export default class TimeLine extends Component {
   }
 
   render() {
+    const { fetching } = this.props;
+    const { calendar } = this.props;
+
     return (
       <View style={styles.container}>
-        {this.props.fetching ?
+        {fetching ?
           <View style={styles.emptyContainer}>
             <Image source={require('../../images/loader.gif')} />
           </View> :
           <Timeline
+            enableEmptySections
             style={styles.list}
-            data={this.props.calendar}
+            data={calendar}
             circleSize={20}
             circleColor="#e91e63"
             lineColor="#9c27b0"
@@ -47,12 +51,12 @@ const styles = StyleSheet.create({
     padding: 5,
     backgroundColor: 'white',
   },
-  list: {
-    flex: 1,
-  },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  list: {
+    flex: 1,
   },
 });
