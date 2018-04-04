@@ -5,7 +5,7 @@ import { View, Text, Image, Dimensions, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 
 const { height, width } = Dimensions.get('window');
-const heightTabContent = height / 4.5;
+const heightTabContent = (22.5 / 100) * height;
 const widthImg = width / 5;
 
 export default class PointTotal extends React.Component {

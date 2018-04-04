@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, Dimensions, Image, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Image, Dimensions, StyleSheet } from 'react-native';
 
 import PropTypes from 'prop-types';
 
@@ -10,10 +10,6 @@ export default class TabMain extends React.Component {
   }
 
   state = {
-    first: 0,
-    second: 0,
-    third: 0,
-    left: 0,
     selectedSemester: 'I',
     list: [],
   };
@@ -28,8 +24,6 @@ export default class TabMain extends React.Component {
     }, new Map()).values()];
 
     const key = result.map(item => item.semester);
-    // const val = result.map(item => item.length);
-    // const a = Object.assign({}, ...key.map((n, index) => ({ [n]: val[index] })));
     switch (key.length) {
       case 1: {
         const I = point.filter(item => item.semester == 'I');
@@ -93,12 +87,6 @@ export default class TabMain extends React.Component {
     }
   }
 
-  onLayout = (e) => {
-    const widthScreen = Dimensions.get('window').width;
-    const left = (widthScreen - e.nativeEvent.layout.width) / 2;
-    this.setState({ left });
-  }
-
   getGradeImage = (Point) => {
     const point = Number(Point);
     let image = '';
@@ -116,30 +104,29 @@ export default class TabMain extends React.Component {
   }
 
   checking = (e) => {
-    const scroll = e.nativeEvent.contentOffset.y;
-    if (scroll > 0 && scroll < 400 && this.state.first == 0) {
-      this.setState({
-        first: 1,
-        second: 0,
-        third: 0,
-        selectedSemester: 'I',
-      });
-    }
-    if (scroll > 400 && scroll < 850 && this.state.second == 0) {
-      this.setState({
-        first: 0,
-        second: 1,
-        third: 0,
-        selectedSemester: 'AKSELERASI I',
-      });
-    }
-    if (scroll > 850 && this.state.third == 0) {
-      this.setState({
-        first: 0,
-        second: 0,
-        third: 1,
-        selectedSemester: 'III',
-      });
+    const heightListitem = 80;
+    const heightFlatlist = (58.5 / 100) * Dimensions.get('window').height;
+
+    const result = [...this.state.list.reduce((mp, o) => {
+      if (!mp.has(o.semester)) mp.set(o.semester, Object.assign({ length: 0 }, o));
+      mp.get(o.semester).length += 1;
+      return mp;
+    }, new Map()).values()];
+
+    let x = 0;
+    const b = result.map((item) => {
+      const a = ((item.length * heightListitem) + x) - heightFlatlist;
+      x = (item.length * heightListitem) + x;
+      const s = { semester: item.semester, scrollPosition: a };
+      return s;
+    });
+
+    const offset = e.nativeEvent.contentOffset.y;
+
+    for (let i = 0; i < b.length - 1; i += 1) {
+      if (offset > b[i].scrollPosition && offset < b[i + 1].scrollPosition) {
+        this.setState({ selectedSemester: b[i + 1].semester });
+      }
     }
   }
 
@@ -162,7 +149,7 @@ export default class TabMain extends React.Component {
 
   render() {
     const { fetching } = this.props;
-    const { selectedSemester, list, left } = this.state;
+    const { selectedSemester, list } = this.state;
 
     return (
       <View>
@@ -178,8 +165,7 @@ export default class TabMain extends React.Component {
               keyExtractor={item => item.id_matkul}
               extraData={this.props} />
             <View
-              style={[styles.notifContainer, { left }]}
-              onLayout={e => this.onLayout(e)} >
+              style={styles.notifContainer}>
               <Text style={styles.notifContent}>SEMESTER {selectedSemester}</Text>
             </View>
           </View>
@@ -191,13 +177,14 @@ export default class TabMain extends React.Component {
 
 const styles = StyleSheet.create({
   listItemContainer: {
+    height: 75,
     flexDirection: 'row',
     backgroundColor: '#eee',
     marginBottom: 5,
     padding: 10,
   },
   kode: {
-    marginBottom: 10,
+    marginBottom: 9,
     fontSize: 17,
     color: '#333',
   },
@@ -217,14 +204,16 @@ const styles = StyleSheet.create({
     height: 60,
   },
   notifContainer: {
-    backgroundColor: '#4caf50',
     position: 'absolute',
-    top: 5,
-    borderRadius: 12,
+    top: 10,
+    backgroundColor: '#4caf50',
+    alignSelf: 'center',
+    borderRadius: 10,
   },
   notifContent: {
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    fontSize: 12,
     color: '#fff',
-    fontSize: 10,
-    padding: 5,
   },
 });
