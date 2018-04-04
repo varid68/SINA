@@ -16,75 +16,33 @@ export default class TabMain extends React.Component {
 
   componentWillMount() {
     const { point } = this.props;
+    let list = [];
 
-    const result = [...point.reduce((mp, o) => {
+    const howManyTypes = [...point.reduce((mp, o) => {
       if (!mp.has(o.semester)) mp.set(o.semester, Object.assign({ length: 0 }, o));
       mp.get(o.semester).length += 1;
       return mp;
     }, new Map()).values()];
 
-    const key = result.map(item => item.semester);
-    switch (key.length) {
-      case 1: {
-        const I = point.filter(item => item.semester == 'I');
-        const list = [...I];
-        this.setState({ list });
-        break;
-      }
+    const a1 = point.filter(item => item.semester == 'Akselerasi I');
+    const a2 = point.filter(item => item.semester == 'Akselerasi II');
 
-      case 2: {
-        const I = point.filter(item => item.semester == 'I');
-        const II = point.filter(item => item.semester == 'II');
-        const list = [...I, ...II];
-        this.setState({ list });
-        break;
-      }
+    const filtered = point.sort((n1, n2) => {
+      if (n1.semester > n2.semester) return 1;
+      if (n1.semester < n2.semester) return -1;
+      return 0;
+    }).filter(item => item.semester != 'Akselerasi I' && item.semester != 'Akselerasi II');
 
-      case 3: {
-        const I = point.filter(item => item.semester == 'I');
-        const II = point.filter(item => item.semester == 'II');
-        const A1 = point.filter(item => item.semester == 'Akselerasi I');
-        const list = [...I, ...II, ...A1];
-        this.setState({ list });
-        break;
-      }
-
-      case 4: {
-        const I = point.filter(item => item.semester == 'I');
-        const II = point.filter(item => item.semester == 'II');
-        const A1 = point.filter(item => item.semester == 'Akselerasi I');
-        const III = point.filter(item => item.semester == 'III');
-        const list = [...I, ...II, ...A1, ...III];
-        this.setState({ list });
-        break;
-      }
-
-      case 5: {
-        const I = point.filter(item => item.semester == 'I');
-        const II = point.filter(item => item.semester == 'II');
-        const A1 = point.filter(item => item.semester == 'Akselerasi I');
-        const III = point.filter(item => item.semester == 'III');
-        const IV = point.filter(item => item.semester == 'IV');
-        const list = [...I, ...II, ...A1, ...III, ...IV];
-        this.setState({ list });
-        break;
-      }
-
-      case 6: {
-        const I = point.filter(item => item.semester == 'I');
-        const II = point.filter(item => item.semester == 'II');
-        const A1 = point.filter(item => item.semester == 'Akselerasi I');
-        const III = point.filter(item => item.semester == 'III');
-        const IV = point.filter(item => item.semester == 'IV');
-        const A2 = point.filter(item => item.semester == 'Akselerasi II');
-        const list = [...I, ...II, ...A1, ...III, ...IV, ...A2];
-        this.setState({ list });
-        break;
-      }
-
-      default:
-        break;
+    if (howManyTypes.length < 3) list = filtered;
+    if (howManyTypes.length == 3) list = filtered.concat(a1);
+    if (howManyTypes.length > 3) {
+      const indexToSplit = filtered.map(e => e.semester).indexOf('III');
+      const first = filtered.slice(0, indexToSplit);
+      const second = filtered.slice(indexToSplit);
+      if (howManyTypes.length == 6) list = first.concat(a1, second, a2);
+      else list = first.concat(a1, second);
     }
+    this.setState({ list });
   }
 
   getGradeImage = (Point) => {
