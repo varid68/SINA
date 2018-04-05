@@ -30,6 +30,18 @@ export default class TabContent extends React.Component {
     this.setState({ schedule });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.listSchedule != nextProps.listSchedule) {
+      const { marker, user } = this.props;
+
+      const schedule = nextProps.listSchedule.filter((item) => {
+        if (item.hari == marker && item.semester == user.semester) return item;
+        return false;
+      });
+      this.setState({ schedule });
+    }
+  }
+
   render() {
     const { schedule } = this.state;
 

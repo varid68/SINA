@@ -19,20 +19,31 @@ export default class FlatListComp extends React.Component {
       const akhir = this.props.list.filter(item => item.pukul == '10:00-11:30');
       const join = awal.concat(akhir);
       this.setState({ list: join });
-    } else {
+      console.log(`join : ${join}`);
+    }
+    if (this.props.list.length == 1) {
       this.setState({ list: this.props.list });
+      console.log(`else : ${this.props.list}`);
+    }
+    if (this.props.list.length == 0) {
+      this.setState({ list: this.props.list });
+      console.log(`else 0 : ${this.props.list}`);
     }
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(`nextProps2 : ${nextProps}`);
     if (this.props.list != nextProps.list) {
+      console.log('hai');
       if (nextProps.list.length > 1) {
         const awal = nextProps.list.filter(item => item.pukul == '08:00-09:30');
         const akhir = nextProps.list.filter(item => item.pukul == '10:00-11:30');
         const join = awal.concat(akhir);
         this.setState({ list: join });
+        console.log(`nextProps: ${join}`);
       } else {
         this.setState({ list: nextProps.list });
+        console.log(`nextProps: ${nextProps.list}`);
       }
     }
   }
