@@ -38,8 +38,9 @@ class ModalFilter extends React.Component {
       url: 'http://chylaceous-thin.000webhostapp.com/public/dosen/',
     })
       .then((res) => {
-        const push = [none, ...res.data];
-        this.setState({ listDosen: push });
+        const filtered = res.data.filter(item => item.nama != 'super-admin');
+        const listDosen = [none, ...filtered];
+        this.setState({ listDosen });
       });
   }
 
@@ -109,6 +110,7 @@ class ModalFilter extends React.Component {
           <Picker.Item label="Akselerasi I" value="Akselerasi I" />
           <Picker.Item label="Tiga" value="III" />
           <Picker.Item label="Empat" value="IV" />
+          <Picker.Item label="Akselerasi II" value="Akselerasi II" />
         </Picker>
       </View>
 

@@ -1,7 +1,10 @@
 /* eslint camelcase:0 */
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, Text, Image, StatusBar, Linking, Dimensions, Alert, BackHandler, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View, Text, Image, StatusBar, Linking, Dimensions,
+  ScrollView, Alert, BackHandler, TouchableOpacity, StyleSheet,
+} from 'react-native';
 import { Container, Header, Left, Body, Right, Content, Icon } from 'native-base';
 
 import PropTypes from 'prop-types';
@@ -206,37 +209,39 @@ class Account extends React.Component {
             </View>
           </View>
 
-          <View style={styles.padding15}>
-            <Text>
-              <Text style={styles.heading}>• </Text>
-              <Text style={styles.headingText}>ADDRESS</Text>
-            </Text>
-            <Text style={styles.headingContent}>{alamat}</Text>
-          </View>
+          <ScrollView>
+            <View style={styles.padding15}>
+              <Text>
+                <Text style={styles.heading}>• </Text>
+                <Text style={styles.headingText}>ADDRESS</Text>
+              </Text>
+              <Text style={styles.headingContent}>{alamat}</Text>
+            </View>
 
-          <View style={styles.padding15}>
-            <Text>
-              <Text style={styles.heading}>• </Text>
-              <Text style={styles.headingText}>PROGRAM STUDI</Text>
-            </Text>
-            <Text style={styles.headingContent}>{jurusan}</Text>
-          </View>
+            <View style={styles.padding15}>
+              <Text>
+                <Text style={styles.heading}>• </Text>
+                <Text style={styles.headingText}>PROGRAM STUDI</Text>
+              </Text>
+              <Text style={styles.headingContent}>{jurusan}</Text>
+            </View>
 
-          <View style={styles.padding15}>
-            <Text>
-              <Text style={styles.heading}>• </Text>
-              <Text style={styles.headingText}>TAHUN MASUK</Text>
-            </Text>
-            <Text style={styles.headingContent}>{tahun_masuk}</Text>
-          </View>
+            <View style={styles.padding15}>
+              <Text>
+                <Text style={styles.heading}>• </Text>
+                <Text style={styles.headingText}>TAHUN MASUK</Text>
+              </Text>
+              <Text style={styles.headingContent}>{tahun_masuk}</Text>
+            </View>
 
-          <View style={styles.padding15}>
-            <Text>
-              <Text style={styles.heading}>• </Text>
-              <Text style={styles.headingText}>TEMPAT, TGL LAHIR</Text>
-            </Text>
-            <Text style={styles.headingContent}>{ttl}</Text>
-          </View>
+            <View style={styles.padding15}>
+              <Text>
+                <Text style={styles.heading}>• </Text>
+                <Text style={styles.headingText}>TEMPAT, TGL LAHIR</Text>
+              </Text>
+              <Text style={styles.headingContent}>{ttl}</Text>
+            </View>
+          </ScrollView>
 
         </Content>
         <TouchableOpacity

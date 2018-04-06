@@ -73,11 +73,14 @@ class Ngampus extends React.Component {
 
 const mapStateToProps = state => ({
   ip: state.providerReducer.indeks.indeks_prestasi,
+  fetching: state.providerReducer.fetching,
+  error: state.providerReducer.error,
+  nim: state.directiveReducer.user.nim,
 });
 
 const mapDispatchToProp = dispatch => ({
   resetDrawer: () => dispatch(resetDrawer()),
-  fetchIndeks: () => dispatch(fetchIndeks()),
+  fetchIndeks: nim => dispatch(fetchIndeks(nim)),
 });
 
 export default connect(

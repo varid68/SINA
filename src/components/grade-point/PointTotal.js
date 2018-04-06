@@ -29,20 +29,20 @@ export default class PointTotal extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { point, selectedSemester } = this.props;
+    const { indeks, selectedSemester } = this.props;
     const { ipk } = nextProps.indeks;
 
-    if (point != nextProps.point || selectedSemester != nextProps.selectedSemester) {
-      if (nextProps.point.length > 0) {
-        const indeksPrestasi = nextProps.indeks.indeks_prestasi.filter((item) => {
-          return item.semester == nextProps.selectedSemester;
-        }).map(item => item.ip);
-        const totalSks = nextProps.point.reduce((a, b) => {
-          const toNumber = Number(b.sks);
-          return a + toNumber;
-        }, 0);
-        this.setState({ ipk, totalSks, indeksPrestasi });
-      }
+    if (indeks != nextProps.indeks || selectedSemester != nextProps.selectedSemester) {
+      // if (typeof (nextProps.point) != 'undefined') {
+      const indeksPrestasi = nextProps.indeks.indeks_prestasi.filter((item) => {
+        return item.semester == nextProps.selectedSemester;
+      }).map(item => item.ip);
+      const totalSks = nextProps.point.reduce((a, b) => {
+        const toNumber = Number(b.sks);
+        return a + toNumber;
+      }, 0);
+      this.setState({ ipk, totalSks, indeksPrestasi });
+      // }
     }
   }
 

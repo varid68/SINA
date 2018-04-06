@@ -86,7 +86,7 @@ class FlatListComp extends React.Component {
       <Animated.View style={[styles.view, animation]}>
         <TouchableOpacity
           style={styles.fab}
-          onPress={() => this.toggleModal}>
+          onPress={this.toggleModal}>
           <Icon
             name="funnel"
             style={{ color: '#fff' }} />
