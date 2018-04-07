@@ -1,4 +1,4 @@
-/* eslint no-unused-expressions: 0 */
+/* eslint no-console: 0 */
 import React from 'react';
 import {
   View, Text, Modal, Image, TouchableOpacity,
@@ -12,10 +12,10 @@ import PropTypes from 'prop-types';
 export default class ModalLogin extends React.Component {
   static propTypes = {
     isVisible: PropTypes.bool.isRequired,
+    error: PropTypes.any,
     setModalVisible: PropTypes.func.isRequired,
     fetchSchedule: PropTypes.func.isRequired,
     storeUser: PropTypes.func.isRequired,
-    error: PropTypes.any,
   }
 
   state = {
@@ -52,6 +52,7 @@ export default class ModalLogin extends React.Component {
       password: this.state.password,
     };
     const { setModalVisible, storeUser, fetchSchedule } = this.props;
+
     axios({
       method: 'post',
       url: 'https://chylaceous-thin.000webhostapp.com/public/login/',
@@ -76,8 +77,7 @@ export default class ModalLogin extends React.Component {
       text,
       ToastAndroid.LONG,
       ToastAndroid.BOTTOM,
-      25,
-      50,
+      25, 50,
     );
   };
 
@@ -89,7 +89,7 @@ export default class ModalLogin extends React.Component {
       <Modal
         animationType="slide"
         transparent
-        onRequestClose={() => console.log('dismiss')}
+        onRequestClose={() => console.log('Hello World')}
         visible={isVisible}>
 
         <Container style={styles.container}>

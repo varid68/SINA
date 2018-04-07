@@ -33,7 +33,6 @@ export default class PointTotal extends React.Component {
     const { ipk } = nextProps.indeks;
 
     if (indeks != nextProps.indeks || selectedSemester != nextProps.selectedSemester) {
-      // if (typeof (nextProps.point) != 'undefined') {
       const indeksPrestasi = nextProps.indeks.indeks_prestasi.filter((item) => {
         return item.semester == nextProps.selectedSemester;
       }).map(item => item.ip);
@@ -42,7 +41,6 @@ export default class PointTotal extends React.Component {
         return a + toNumber;
       }, 0);
       this.setState({ ipk, totalSks, indeksPrestasi });
-      // }
     }
   }
 

@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, Image, Text, FlatList, Animated, TouchableOpacity, Easing, StyleSheet } from 'react-native';
+import {
+  View, Image, Text, FlatList, Animated,
+  TouchableOpacity, Easing, StyleSheet,
+} from 'react-native';
 import { Container, Icon } from 'native-base';
 
 import PropTypes from 'prop-types';
@@ -36,7 +39,11 @@ class FlatListComp extends React.Component {
   toggleModal = () => this.setState({ isVisible: !this.state.isVisible });
 
   randImage = () => {
-    const source = [require('../../images/one.png'), require('../../images/two.png'), require('../../images/three.png')];
+    const source = [
+      require('../../images/one.png'),
+      require('../../images/two.png'),
+      require('../../images/three.png'),
+    ];
     const random = source[Math.floor(Math.random() * source.length)];
     return random;
   }
@@ -64,14 +71,15 @@ class FlatListComp extends React.Component {
   }
 
   scroll = (event) => {
+    const { upLimiter, downLimiter } = this.state;
     const currentOffset = event.nativeEvent.contentOffset.y;
     const direction = currentOffset > this.state.offset ? 'down' : 'up';
     this.state.offset = currentOffset;
-    if (direction == 'up' && this.state.upLimiter == 0) {
+    if (direction == 'up' && upLimiter == 0) {
       this.UpToDown();
       this.setState({ upLimiter: 1, downLimiter: 0 });
     }
-    if (direction == 'down' && this.state.downLimiter == 0) {
+    if (direction == 'down' && downLimiter == 0) {
       this.downToUp();
       this.setState({ downLimiter: 1, upLimiter: 0 });
     }

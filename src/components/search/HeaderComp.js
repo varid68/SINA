@@ -1,7 +1,9 @@
-/* eslint array-callback-return: 0, consistent-return: 0 */
 import React from 'react';
 import { connect } from 'react-redux';
-import { TouchableOpacity, Linking, Alert, StatusBar, Dimensions, StyleSheet } from 'react-native';
+import {
+  TouchableOpacity, Linking, Alert,
+  StatusBar, Dimensions, StyleSheet,
+} from 'react-native';
 import { Header, Item, Input, Icon } from 'native-base';
 
 import PropTypes from 'prop-types';
@@ -33,7 +35,7 @@ class HeaderComp extends React.Component {
 
   showPopup = (eventName, index) => {
     if (eventName !== 'itemSelected') return;
-    if (index === 0) this.toggleModal();
+    if (index === 0) this.showAlert();
     else this.beriBintang();
   }
 
@@ -44,10 +46,11 @@ class HeaderComp extends React.Component {
     });
   };
 
-  toggleModal = () => {
+  showAlert = () => {
     Alert.alert(
       '',
-      'If you have any trouble while using this application, feel free to get in touch with me on email',
+      'If you have any trouble while using this application,' +
+      'feel free to get in touch with me on email',
       [{ text: 'OKAY' }],
       { cancelable: false },
     );
@@ -75,6 +78,7 @@ class HeaderComp extends React.Component {
     const result = listSchedule.filter((item) => {
       const isExist = pola.test(item.mata_kuliah);
       if (isExist) return item;
+      return false;
     });
     this.props.filterListSchedule(result);
   }
@@ -118,6 +122,7 @@ class HeaderComp extends React.Component {
   }
 }
 
+
 const mapStateToProps = state => ({
   listSchedule: state.providerReducer.listSchedule,
 });
@@ -130,7 +135,6 @@ export default connect(
   mapStateToProps,
   mapDisptachToProps,
 )(HeaderComp);
-
 
 const styles = StyleSheet.create({
   containerMenu: {

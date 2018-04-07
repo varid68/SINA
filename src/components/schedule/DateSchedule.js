@@ -1,4 +1,3 @@
-/* eslint eqeqeq: 0 */
 import React from 'react';
 import { View, Text, Image, Dimensions, StyleSheet } from 'react-native';
 
@@ -13,14 +12,11 @@ export default class DateSchedule extends React.Component {
     date: PropTypes.string.isRequired,
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      date: '',
-      month: '',
-      year: '',
-    };
-  }
+  state = {
+    date: '',
+    month: '',
+    year: '',
+  };
 
   componentWillMount() {
     const split = this.props.date.split(' ');
@@ -63,6 +59,7 @@ export default class DateSchedule extends React.Component {
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {

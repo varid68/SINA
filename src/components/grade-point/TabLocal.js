@@ -15,6 +15,7 @@ export default class TabLocal extends React.Component {
     point: PropTypes.array.isRequired,
     user: PropTypes.object.isRequired,
     selectedSemester: PropTypes.string.isRequired,
+    selectedTab: PropTypes.any.isRequired,
     changeSemester: PropTypes.func.isRequired,
   }
 
@@ -31,6 +32,8 @@ export default class TabLocal extends React.Component {
         this.downToUp();
       }, 1500);
     }
+    if (nextProps.selectedTab == '0') this.upToDown();
+    if (nextProps.selectedTab == '1') this.downToUp();
   }
 
   getGradeImage = (Point) => {
@@ -73,7 +76,7 @@ export default class TabLocal extends React.Component {
       {
         toValue: -100,
         easing: Easing.exp,
-        duration: 200,
+        duration: 700,
       },
     ).start();
   }
@@ -83,7 +86,7 @@ export default class TabLocal extends React.Component {
       this.state.translateY,
       {
         toValue: 0,
-        duration: 300,
+        duration: 700,
       },
     ).start();
   }
@@ -167,6 +170,7 @@ export default class TabLocal extends React.Component {
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   listItemContainer: {

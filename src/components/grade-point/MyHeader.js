@@ -21,11 +21,11 @@ export default class MyHeader extends React.Component {
 
   showPopup = (eventName, index) => {
     if (eventName !== 'itemSelected') return;
-    if (index === 0) this.toggleModal();
+    if (index === 0) this.showAlert();
     else this.beriBintang();
   }
 
-  toggleModal = () => {
+  showAlert = () => {
     Alert.alert(
       '',
       'If you have any trouble while using this application, feel free to get in touch with me on email',
@@ -75,6 +75,7 @@ export default class MyHeader extends React.Component {
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   containerMenu: {

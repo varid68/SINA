@@ -1,4 +1,3 @@
-/* eslint object-curly-newline: 0 */
 import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text, Picker, TouchableOpacity, CheckBox, StyleSheet } from 'react-native';
@@ -36,18 +35,20 @@ class ModalFilter extends React.Component {
     axios({
       method: 'get',
       url: 'http://chylaceous-thin.000webhostapp.com/public/dosen/',
-    })
-      .then((res) => {
-        const filtered = res.data.filter(item => item.nama != 'super-admin');
-        const listDosen = [none, ...filtered];
-        this.setState({ listDosen });
-      });
+    }).then((res) => {
+      const filtered = res.data.filter(item => item.nama != 'super-admin');
+      const listDosen = [none, ...filtered];
+      this.setState({ listDosen });
+    });
   }
 
   toggleCheckbox = () => this.setState({ checked: !this.state.checked });
 
   filter = () => {
-    const { selectedDosen, selectedDay, selectedSemester, checked } = this.state;
+    const {
+      selectedDosen, selectedDay,
+      selectedSemester, checked,
+    } = this.state;
     const { listSchedule } = this.props;
 
     let filtered = [];
@@ -133,7 +134,7 @@ class ModalFilter extends React.Component {
 
       <TouchableOpacity
         onPress={this.toggleCheckbox}
-        style={{ flexDirection: 'row', marginTop: -8, marginBottom: 10, alignItems: 'center' }}>
+        style={styles.checkboxContainer}>
         <CheckBox value={this.state.checked} />
         <Text> Urutkan berdasarkan hari mengajar</Text>
       </TouchableOpacity>
@@ -159,6 +160,7 @@ class ModalFilter extends React.Component {
     );
   }
 }
+
 
 const mapStateToProps = state => ({
   listSchedule: state.providerReducer.listSchedule,
@@ -188,5 +190,11 @@ const styles = StyleSheet.create({
     borderTopColor: '#eee',
     borderTopWidth: 1,
     marginTop: 10,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    marginTop: -8,
+    marginBottom: 10,
+    alignItems: 'center',
   },
 });

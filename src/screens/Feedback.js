@@ -51,12 +51,12 @@ class Feedback extends React.Component {
     return (
       <Container>
         <StatusBarComp />
-
         <FeedbackForm {...this.props} />
       </Container>
     );
   }
 }
+
 
 const mapStateToProps = state => ({
   user: state.directiveReducer.user,

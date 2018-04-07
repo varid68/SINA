@@ -1,3 +1,4 @@
+/* eslint no-console: 0 */
 import React from 'react';
 import { Text, TouchableOpacity, Alert, StatusBar, Linking, StyleSheet } from 'react-native';
 import { Header, Left, Body, Right, Icon } from 'native-base';
@@ -23,14 +24,15 @@ export default class HeaderSchedule extends React.Component {
 
   showPopup = (eventName, index) => {
     if (eventName !== 'itemSelected') return;
-    if (index === 0) this.toggleModal();
+    if (index === 0) this.showAlert();
     else this.beriBintang();
   }
 
-  toggleModal = () => {
+  showAlert = () => {
     Alert.alert(
       '',
-      'If you have any trouble while using this application, feel free to get in touch with me on email',
+      'If you have any trouble while using this application,' +
+      'feel free to get in touch with me on email',
       [{ text: 'OKAY' }],
       { cancelable: false },
     );
@@ -91,14 +93,14 @@ export default class HeaderSchedule extends React.Component {
             onPress={this.toSearchPage}>
             <MaterialIcons
               name="search"
-              style={styles.icon} />
+              style={styles.searchIcon} />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.containerIcon}
             onPress={this.toCalendarPage}>
             <FontAwesome
               name="calendar"
-              style={styles.icon2} />
+              style={styles.calendarIcon} />
           </TouchableOpacity>
           <PopupMenu
             actions={['Tentang aplikasi', 'Beri bintang 5']}
@@ -108,6 +110,7 @@ export default class HeaderSchedule extends React.Component {
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   header: {
@@ -130,11 +133,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  icon: {
+  searchIcon: {
     color: '#fff',
     fontSize: 25,
   },
-  icon2: {
+  calendarIcon: {
     color: '#fff',
     fontSize: 20,
   },

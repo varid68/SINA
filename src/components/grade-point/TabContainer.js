@@ -1,4 +1,4 @@
-/* eslint max-len:0 */
+/* eslint arrow-body-style: 0 */
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Tabs, Tab } from 'native-base';
@@ -21,6 +21,7 @@ export default class TabContainer extends React.Component {
   state = {
     filteredPoint: [],
     point: [],
+    selectedTab: '',
   };
 
   componentWillMount() {
@@ -32,7 +33,9 @@ export default class TabContainer extends React.Component {
     const { point, selectedSemester } = this.props;
     if (point != nextProps.point || selectedSemester != nextProps.selectedSemester) {
       if (nextProps.point.length > 0) {
-        const filtered = nextProps.point.filter(item => item.semester == nextProps.selectedSemester);
+        const filtered = nextProps.point.filter((item) => {
+          return item.semester == nextProps.selectedSemester;
+        });
         this.setState({
           filteredPoint: filtered,
           point: nextProps.point,
@@ -41,8 +44,12 @@ export default class TabContainer extends React.Component {
     }
   }
 
+  changeTab(i) {
+    this.setState({ selectedTab: i });
+  }
+
   render() {
-    const { point, filteredPoint } = this.state;
+    const { point, filteredPoint, selectedTab } = this.state;
     const {
       fetching, user,
       selectedSemester, changeSemester,
@@ -50,7 +57,8 @@ export default class TabContainer extends React.Component {
 
     return (
       <Tabs
-        tabBarUnderlineStyle={styles.tabContainer}>
+        tabBarUnderlineStyle={styles.tabContainer}
+        onChangeTab={({ i }) => this.changeTab(i)} >
         <Tab
           heading={`LOCAL (${filteredPoint.length})`}
           textStyle={styles.white}
@@ -59,6 +67,7 @@ export default class TabContainer extends React.Component {
           activeTextStyle={styles.white}>
           <TabLocal
             changeSemester={changeSemester}
+            selectedTab={selectedTab}
             selectedSemester={selectedSemester}
             user={user}
             fetching={fetching}
@@ -78,6 +87,7 @@ export default class TabContainer extends React.Component {
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   white: {

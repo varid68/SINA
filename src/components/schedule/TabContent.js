@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, Image, Dimensions } from 'react-native';
+import { View, Image, Dimensions, StyleSheet } from 'react-native';
 
 import PropTypes from 'prop-types';
 import FlatList from './FlatListComp';
 
 const { height } = Dimensions.get('window');
 const heightTab = height / 5;
-const heightLoading = height - (25 + heightTab + 50 + 72);
+const heightLoader = height - (25 + 56 + heightTab + 50);
+// 25 => status bar, 56 => tinggi header, 50 => tinggi tabClicker
 
 export default class TabContent extends React.Component {
   static propTypes = {
@@ -31,9 +32,8 @@ export default class TabContent extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.listSchedule != nextProps.listSchedule) {
-      const { marker, user } = this.props;
-
+    const { marker, user, listSchedule } = this.props;
+    if (listSchedule != nextProps.listSchedule) {
       const schedule = nextProps.listSchedule.filter((item) => {
         if (item.hari == marker && item.semester == user.semester) return item;
         return false;
@@ -44,14 +44,15 @@ export default class TabContent extends React.Component {
 
   render() {
     const { schedule } = this.state;
+    const { fetching } = this.props;
 
     return (
       <View>
-        {this.props.fetching ?
-          <View style={{ justifyContent: 'center', alignItems: 'center', height: heightLoading }}>
+        {fetching ?
+          <View style={styles.loaderContainer}>
             <Image
               source={require('../../images/loader.gif')}
-              style={{ height: 50, width: 50 }} />
+              style={styles.loader} />
           </View> :
           <FlatList list={schedule} />
         }
@@ -59,3 +60,16 @@ export default class TabContent extends React.Component {
     );
   }
 }
+
+
+const styles = StyleSheet.create({
+  loaderContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: heightLoader,
+  },
+  loader: {
+    height: 50,
+    width: 50,
+  },
+});

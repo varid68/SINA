@@ -1,5 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Linking, WebView, StatusBar, StyleSheet, Alert } from 'react-native';
+import {
+  View, Text, TouchableOpacity, Linking,
+  WebView, StatusBar, StyleSheet, Alert,
+} from 'react-native';
 import { Header, Body, Right, Icon } from 'native-base';
 
 import PropTypes from 'prop-types';
@@ -27,11 +30,11 @@ export default class NewsDetail extends React.Component {
 
   showPopup = (eventName, index) => {
     if (eventName !== 'itemSelected') return;
-    if (index === 0) this.toggleModal();
+    if (index === 0) this.showAlert();
     else this.beriBintang();
   }
 
-  toggleModal = () => {
+  showAlert = () => {
     Alert.alert(
       '',
       'If you have any trouble while using this application, feel free to get in touch with me on email',
@@ -42,7 +45,7 @@ export default class NewsDetail extends React.Component {
 
   beriBintang = () => {
     const url = 'https://play.google.com/store/apps/details?id=name.ratson.uiexplorer';
-    Linking.openURL(url).catch(err => console.error('An error occurred', err));
+    Linking.openURL(url).catch();
   }
 
   renderHeader = () => (

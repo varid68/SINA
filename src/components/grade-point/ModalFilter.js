@@ -5,8 +5,7 @@ import { Button } from 'native-base';
 import PropTypes from 'prop-types';
 import Modal from 'react-native-modal';
 
-
-class ModalFilter extends React.Component {
+export default class ModalFilter extends React.Component {
   static propTypes = {
     closeModal: PropTypes.func.isRequired,
     modalVisibility: PropTypes.bool.isRequired,
@@ -93,7 +92,6 @@ class ModalFilter extends React.Component {
   }
 }
 
-export default ModalFilter;
 
 const styles = StyleSheet.create({
   modalContent: {

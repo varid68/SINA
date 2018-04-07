@@ -45,6 +45,7 @@ export default class TimeLine extends Component {
   }
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

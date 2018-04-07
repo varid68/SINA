@@ -2,7 +2,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Container } from 'native-base';
-
 import OneSignal from 'react-native-onesignal';
 
 import { setModalVisible, storeUser } from '../actions/directive';
