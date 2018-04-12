@@ -70,6 +70,7 @@ const mapStateToProps = state => ({
   date: state.directiveReducer.dateTab,
   isVisible: state.directiveReducer.isVisible,
   error: state.providerReducer.error,
+  jurusan: state.directiveReducer.user.jurusan,
 });
 
 const mapDispatchToProps = dispatch => ({

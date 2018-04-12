@@ -10,6 +10,7 @@ const widthImg = width / 7;
 export default class DateSchedule extends React.Component {
   static propTypes = {
     date: PropTypes.string.isRequired,
+    jurusan: PropTypes.string.isRequired,
   }
 
   state = {
@@ -38,8 +39,15 @@ export default class DateSchedule extends React.Component {
     }
   }
 
+  splitJurusan = (jurusan, isStarter) => {
+    const spliter = jurusan.split(' ');
+    const result = isStarter ? spliter[0] : spliter[1];
+    return result;
+  }
+
   render() {
     const { date, month, year } = this.state;
+    const { jurusan } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.textContainer}>
@@ -47,6 +55,10 @@ export default class DateSchedule extends React.Component {
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.day}>{date}</Text>
             <Text style={styles.month}>{year}{'\n'}{month}</Text>
+          </View>
+          <View style={styles.jurusanContainer}>
+            <Text style={styles.jurusanUp}>{this.splitJurusan(jurusan, true)}</Text>
+            <Text style={styles.jurusanDown}>{this.splitJurusan(jurusan, false)}</Text>
           </View>
         </View>
 
@@ -86,6 +98,20 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 10,
     paddingTop: 2,
+  },
+  jurusanContainer: {
+    flexDirection: 'row',
+    marginTop: 10,
+  },
+  jurusanUp: {
+    fontSize: 18,
+    color: '#fff',
+  },
+  jurusanDown: {
+    fontSize: 15,
+    marginTop: 22,
+    marginLeft: -20,
+    color: '#fff',
   },
   image: {
     flex: 1,
