@@ -11,12 +11,14 @@ import PointTotal from '../components/grade-point/PointTotal';
 import TabContainer from '../components/grade-point/TabContainer';
 
 import { resetDrawer, changeSemester } from '../actions/directive';
-import { fetchPoint, fetchIndeks } from '../actions/provider';
+import { fetchGradePoint } from '../actions/provider';
 
 class GradePoint extends React.Component {
   static propTypes = {
     navigator: PropTypes.object.isRequired,
     resetDrawer: PropTypes.func.isRequired,
+    fetchGradePoint: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
   };
 
   static navigatorStyle = {
@@ -29,6 +31,11 @@ class GradePoint extends React.Component {
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
+  componentWillMount() {
+    const { nim } = this.props.user;
+    this.props.fetchGradePoint(nim);
+  }
+
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
@@ -36,6 +43,7 @@ class GradePoint extends React.Component {
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }
+
 
   onNavigatorEvent(event) {
     switch (event.id) {
@@ -47,6 +55,7 @@ class GradePoint extends React.Component {
         break;
     }
   }
+
 
   handleBackButton = () => {
     this.props.resetDrawer();
@@ -78,13 +87,15 @@ const mapStateToProps = state => ({
   point: state.providerReducer.point,
   user: state.directiveReducer.user,
   selectedSemester: state.directiveReducer.selectedSemester,
-  indeks: state.providerReducer.indeks,
+  ipk: state.providerReducer.ipk,
+  ips: state.providerReducer.ips,
+  scores: state.providerReducer.scores,
 });
 
 const mapDispatchToProps = dispatch => ({
   resetDrawer: () => dispatch(resetDrawer()),
-  fetchPoint: nim => dispatch(fetchPoint(nim)),
-  fetchIndeks: nim => dispatch(fetchIndeks(nim)),
+  fetchGradePoint: nim => dispatch(fetchGradePoint(nim)),
+  // fetchIndeks: nim => dispatch(fetchIndeks(nim)),
   changeSemester: semester => dispatch(changeSemester(semester)),
 });
 

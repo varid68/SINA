@@ -9,38 +9,43 @@ export default class ModalFilter extends React.Component {
   static propTypes = {
     closeModal: PropTypes.func.isRequired,
     modalVisibility: PropTypes.bool.isRequired,
-    user: PropTypes.any.isRequired,
     changeSemester: PropTypes.func.isRequired,
+    scoresLength: PropTypes.number.isRequired,
   };
 
   state = {
-    semester: '',
+    semester: [],
     selected: '- none -',
   };
 
-  componentWillMount() {
-    let semester = null;
-    switch (this.props.user.semester) {
-      case 'I': semester = ['- none -'];
-        break;
+  componentWillReceiveProps(nextProps) {
+    if (this.props.scoresLength != nextProps.scoresLength) {
+      let semester = null;
+      switch (nextProps.scoresLength) {
+        case 0: semester = ['- none -'];
+          break;
 
-      case 'II': semester = ['- none -', 'I'];
-        break;
+        case 1: semester = ['- none -', 'I'];
+          break;
 
-      case 'Akselerasi I': semester = ['- none -', 'I', 'II'];
-        break;
+        case 2: semester = ['- none -', 'I', 'II'];
+          break;
 
-      case 'III': semester = ['- none -', 'I', 'II', 'Akselerasi I'];
-        break;
+        case 3: semester = ['- none -', 'I', 'II', 'Akselerasi I'];
+          break;
 
-      case 'IV': semester = ['- none -', 'I', 'II', 'Akselerasi I', 'III'];
-        break;
+        case 4: semester = ['- none -', 'I', 'II', 'Akselerasi I', 'III'];
+          break;
 
-      default: semester = ['- none -', 'I', 'II', 'Akselerasi I', 'III', 'IV'];
-        break;
+        case 5: semester = ['- none -', 'I', 'II', 'Akselerasi I', 'III', 'IV'];
+          break;
+
+        default: semester = ['- none -', 'I', 'II', 'Akselerasi I', 'III', 'IV', 'Akselerasi II'];
+          break;
+      }
+
+      this.setState({ semester });
     }
-
-    this.setState({ semester });
   }
 
   filter = () => {

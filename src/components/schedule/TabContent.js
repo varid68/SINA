@@ -14,7 +14,6 @@ export default class TabContent extends React.Component {
     marker: PropTypes.string.isRequired,
     listSchedule: PropTypes.array.isRequired,
     fetching: PropTypes.bool.isRequired,
-    user: PropTypes.any.isRequired,
   }
 
   state = {
@@ -22,20 +21,20 @@ export default class TabContent extends React.Component {
   }
 
   componentWillMount() {
-    const { listSchedule, marker, user } = this.props;
+    const { listSchedule, marker } = this.props;
 
     const schedule = listSchedule.filter((item) => {
-      if (item.hari == marker && item.semester == user.semester) return item;
+      if (item.hari == marker) return item;
       return false;
     });
     this.setState({ schedule });
   }
 
   componentWillReceiveProps(nextProps) {
-    const { marker, user, listSchedule } = this.props;
+    const { marker, listSchedule } = this.props;
     if (listSchedule != nextProps.listSchedule) {
       const schedule = nextProps.listSchedule.filter((item) => {
-        if (item.hari == marker && item.semester == user.semester) return item;
+        if (item.hari == marker) return item;
         return false;
       });
       this.setState({ schedule });

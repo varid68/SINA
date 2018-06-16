@@ -12,11 +12,12 @@ const heightLoader = height - (25 + (height / 5) + 50 + 72);
 export default class TabLocal extends React.Component {
   static propTypes = {
     fetching: PropTypes.bool.isRequired,
-    point: PropTypes.array.isRequired,
+    scores: PropTypes.array.isRequired,
     user: PropTypes.object.isRequired,
     selectedSemester: PropTypes.string.isRequired,
     selectedTab: PropTypes.any.isRequired,
     changeSemester: PropTypes.func.isRequired,
+    scoresLength: PropTypes.number.isRequired,
   }
 
   state = {
@@ -27,7 +28,7 @@ export default class TabLocal extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.point != nextProps.point) {
+    if (this.props.scores != nextProps.scores) {
       setTimeout(() => {
         this.downToUp();
       }, 1500);
@@ -39,16 +40,16 @@ export default class TabLocal extends React.Component {
   getGradeImage = (Point) => {
     const point = Number(Point);
     let image = '';
-    if (point <= 100 && point >= 92) image = require('../../images/A.png');
-    else if (point <= 91 && point >= 84) image = require('../../images/A-min.png');
-    else if (point <= 83 && point >= 75) image = require('../../images/B-plus.png');
-    else if (point <= 74 && point >= 67) image = require('../../images/B.png');
-    else if (point <= 66 && point >= 59) image = require('../../images/B-min.png');
-    else if (point <= 58 && point >= 50) image = require('../../images/C-plus.png');
-    else if (point <= 49 && point >= 42) image = require('../../images/C.png');
-    else if (point <= 41 && point >= 34) image = require('../../images/C-min.png');
-    else if (point <= 33 && point >= 25) image = require('../../images/D-plus.png');
-    else image = require('../../images/D.png');
+    if (point <= 100 && point >= 85) image = require('../../images/A.png');
+    else if (point <= 84 && point >= 80) image = require('../../images/A-min.png');
+    else if (point <= 79 && point >= 75) image = require('../../images/B-plus.png');
+    else if (point <= 74 && point >= 70) image = require('../../images/B.png');
+    else if (point <= 69 && point >= 65) image = require('../../images/B-min.png');
+    else if (point <= 64 && point >= 60) image = require('../../images/C-plus.png');
+    else if (point <= 59 && point >= 55) image = require('../../images/C.png');
+    else if (point <= 54 && point >= 50) image = require('../../images/C-min.png');
+    else if (point <= 50 && point >= 40) image = require('../../images/D.png');
+    else image = require('../../images/E.png');
     return image;
   }
 
@@ -127,8 +128,10 @@ export default class TabLocal extends React.Component {
   }
 
   render() {
-    const { fetching, point, user } = this.props;
-    const { changeSemester, selectedSemester } = this.props;
+    const {
+      fetching, scores, user, scoresLength,
+      changeSemester, selectedSemester,
+    } = this.props;
     const { isScrolling, modalVisibility } = this.state;
 
     return (
@@ -139,7 +142,7 @@ export default class TabLocal extends React.Component {
           </View> :
           <View>
             <FlatList
-              data={point}
+              data={scores}
               renderItem={
                 ({ index, item }) => this.renderListItem(index, item)
               }
@@ -165,6 +168,7 @@ export default class TabLocal extends React.Component {
           selectedSemester={selectedSemester}
           changeSemester={changeSemester}
           closeModal={this.closeModal}
+          scoresLength={scoresLength}
           modalVisibility={modalVisibility} />
       </View>
     );

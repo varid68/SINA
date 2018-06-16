@@ -15,23 +15,16 @@ export function fetchCalendar() {
   };
 }
 
-export function fetchSchedule() {
+export function fetchSchedule(semester, jurusan) {
   return {
     type: 'FETCH_SCHEDULE',
-    payload: axios.get(`http://chylaceous-thin.000webhostapp.com/public/schedule/`),
+    payload: axios.get(`http://chylaceous-thin.000webhostapp.com/public/schedule/${semester}/${jurusan}/`),
   };
 }
 
-export function fetchPoint(nim) {
+export function fetchGradePoint(nim) {
   return {
-    type: 'FETCH_POINT',
-    payload: axios.get('http://chylaceous-thin.000webhostapp.com/public/point/' + nim),
-  };
-}
-
-export function fetchIndeks(nim) {
-  return {
-    type: 'FETCH_INDEKS',
-    payload: axios.get('http://chylaceous-thin.000webhostapp.com/public/ipk/' + nim),
+    type: 'FETCH_GRADE_POINT',
+    payload: axios.get('http://chylaceous-thin.000webhostapp.com/public/grade-point/' + nim),
   };
 }

@@ -1,4 +1,4 @@
-/* eslint arrow-body-style: 0 */
+/* eslint arrow-body-style: 0, no-underscore-dangle: 0 */
 import React from 'react';
 import { View, Text, Image, Dimensions, StyleSheet } from 'react-native';
 
@@ -10,60 +10,61 @@ const widthImg = width / 5;
 
 export default class PointTotal extends React.Component {
   static propTypes = {
-    user: PropTypes.object.isRequired,
-    fetchIndeks: PropTypes.func.isRequired,
-    point: PropTypes.array.isRequired,
-    indeks: PropTypes.any.isRequired,
     selectedSemester: PropTypes.string.isRequired,
+    ipk: PropTypes.any.isRequired,
+    ips: PropTypes.array.isRequired,
+    scores: PropTypes.array.isRequired,
   }
 
   state = {
+    ips: 0,
+    totalIps: 0,
     totalSks: 0,
-    ipk: 0,
-    indeksPrestasi: 0,
-  }
-
-  componentWillMount() {
-    const { nim } = this.props.user;
-    this.props.fetchIndeks(nim);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { indeks, selectedSemester } = this.props;
-    const { ipk } = nextProps.indeks;
+    const _totalIps = nextProps.ips.reduce((a, b) => {
+      const toInt = Number(b.ip);
+      return a + toInt;
+    }, 0);
 
-    if (indeks != nextProps.indeks || selectedSemester != nextProps.selectedSemester) {
-      const indeksPrestasi = nextProps.indeks.indeks_prestasi.filter((item) => {
-        return item.semester == nextProps.selectedSemester;
-      }).map(item => item.ip);
-      const totalSks = nextProps.point.reduce((a, b) => {
-        const toNumber = Number(b.sks);
-        return a + toNumber;
-      }, 0);
-      this.setState({ ipk, totalSks, indeksPrestasi });
-    }
+    const totalIps = Math.round(_totalIps * 100) / 100;
+
+    const totalSks = nextProps.scores.reduce((a, b) => {
+      const toInt = Number(b.sks);
+      return a + toInt;
+    }, 0);
+
+    const ips = nextProps.ips.filter((item) => {
+      return item.semester == nextProps.selectedSemester;
+    }).map(item => item.ip);
+
+    this.setState({ totalIps, totalSks, ips });
   }
 
   render() {
+    const { ipk, selectedSemester } = this.props;
+    const { totalIps, totalSks, ips } = this.state;
+
     return (
       <View style={styles.container}>
         <View style={{ flex: 2 }}>
           <Text style={styles.gradeText}>Your Grade Point!</Text>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.descPoint}>IPK Utama</Text>
-            <Text style={styles.point}>-----</Text>
+            <Text style={styles.point}>{!ipk ? 0 : ipk}</Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.descPoint}>IP -&gt; {this.props.selectedSemester}</Text>
-            <Text style={styles.point}>{this.state.indeksPrestasi}</Text>
+            <Text style={styles.descPoint}>IPS -&gt; {selectedSemester}</Text>
+            <Text style={styles.point}>{ips}</Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.descPoint2}>Total IPK</Text>
-            <Text style={styles.point2}>{this.state.ipk}</Text>
+            <Text style={styles.descPoint2}>Total IPS</Text>
+            <Text style={styles.point2}>{totalIps}</Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.descPoint2}>Total SKS</Text>
-            <Text style={styles.point2}>{this.state.totalSks}</Text>
+            <Text style={styles.point2}>{totalSks}</Text>
           </View>
         </View>
         <View style={{ flex: 1 }}>

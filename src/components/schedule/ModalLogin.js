@@ -58,12 +58,13 @@ export default class ModalLogin extends React.Component {
       url: 'https://chylaceous-thin.000webhostapp.com/public/login/',
       data,
     }).then((response) => {
+      const { semester, jurusan } = response.data;
       this.setState({ isLoading: false });
       if (response.data == 'Wrong Password') {
         this.showToast('Kombinasi Username & Password salah!');
       } else {
         setModalVisible();
-        fetchSchedule();
+        fetchSchedule(semester, jurusan);
         storeUser(response.data);
       }
     }).catch(() => {

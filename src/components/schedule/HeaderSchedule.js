@@ -4,7 +4,6 @@ import { Text, TouchableOpacity, Alert, StatusBar, Linking, StyleSheet } from 'r
 import { Header, Left, Body, Right, Icon } from 'native-base';
 
 import PropTypes from 'prop-types';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import PopupMenu from '../PopupMenu';
@@ -50,14 +49,6 @@ export default class HeaderSchedule extends React.Component {
     });
   };
 
-  toSearchPage = () => {
-    this.props.navigator.push({
-      screen: 'push.Search',
-      animated: true,
-      animationType: 'slide-horizontal',
-    });
-  }
-
   toCalendarPage = () => {
     this.props.navigator.push({
       screen: 'push.AcademicCalendar',
@@ -88,13 +79,6 @@ export default class HeaderSchedule extends React.Component {
           <Text style={styles.title}>Schedule</Text>
         </Body>
         <Right>
-          <TouchableOpacity
-            style={styles.containerIcon}
-            onPress={this.toSearchPage}>
-            <MaterialIcons
-              name="search"
-              style={styles.searchIcon} />
-          </TouchableOpacity>
           <TouchableOpacity
             style={styles.containerIcon}
             onPress={this.toCalendarPage}>
@@ -132,10 +116,6 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  searchIcon: {
-    color: '#fff',
-    fontSize: 25,
   },
   calendarIcon: {
     color: '#fff',

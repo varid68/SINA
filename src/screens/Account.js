@@ -194,51 +194,24 @@ class Account extends React.Component {
         {this.renderName()}
 
         <Content style={{ backgroundColor: '#f4f4f4' }}>
-          <View style={styles.classContainer}>
-            <View style={styles.class}>
-              <Icon name="ios-book-outline" />
-              <Text style={{ fontSize: 13 }}>class</Text>
-            </View>
-            <View style={styles.class}>
-              <Icon name="ios-pin-outline" />
-              <Text style={{ fontSize: 13 }}>location</Text>
-            </View>
-            <View style={styles.class}>
-              <Icon name="ios-call-outline" />
-              <Text style={{ fontSize: 13 }}>phone</Text>
-            </View>
-          </View>
-
           <ScrollView>
             <View style={styles.padding15}>
-              <Text>
-                <Text style={styles.heading}>• </Text>
-                <Text style={styles.headingText}>ADDRESS</Text>
-              </Text>
+              <Text style={{ color: '#e91e63' }}>• alamat</Text>
               <Text style={styles.headingContent}>{alamat}</Text>
             </View>
 
             <View style={styles.padding15}>
-              <Text>
-                <Text style={styles.heading}>• </Text>
-                <Text style={styles.headingText}>PROGRAM STUDI</Text>
-              </Text>
+              <Text style={{ color: '#e91e63' }}>• program studi</Text>
               <Text style={styles.headingContent}>{jurusan}</Text>
             </View>
 
             <View style={styles.padding15}>
-              <Text>
-                <Text style={styles.heading}>• </Text>
-                <Text style={styles.headingText}>TAHUN MASUK</Text>
-              </Text>
+              <Text style={{ color: '#e91e63' }}>• tahun masuk</Text>
               <Text style={styles.headingContent}>{tahun_masuk}</Text>
             </View>
 
             <View style={styles.padding15}>
-              <Text>
-                <Text style={styles.heading}>• </Text>
-                <Text style={styles.headingText}>TEMPAT, TGL LAHIR</Text>
-              </Text>
+              <Text style={{ color: '#e91e63' }}>• tempat, tgl lahir</Text>
               <Text style={styles.headingContent}>{ttl}</Text>
             </View>
           </ScrollView>
@@ -286,6 +259,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#4caf50',
     height: heightHeader,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
   },
   nameContainer: {
     flex: 1.5,
@@ -379,7 +354,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 20,
     paddingTop: 2,
-    color: '#000',
+    color: '#4caf50',
   },
   headingText: {
     fontWeight: 'bold',
@@ -388,7 +363,8 @@ const styles = StyleSheet.create({
   headingContent: {
     paddingLeft: 15,
     paddingTop: 5,
-    color: '#B3B3B3',
+    color: '#333',
+    fontSize: 16,
   },
   logout: {
     width: widthFooter,
@@ -396,6 +372,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     position: 'absolute',
     bottom: 10,
+    borderRadius: 5,
   },
   logoutText: {
     padding: 10,

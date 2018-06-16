@@ -1,3 +1,4 @@
+/* eslint object-curly-newline: 0 */
 import React from 'react';
 import { View, Text, Image, Dimensions, StyleSheet } from 'react-native';
 
@@ -10,13 +11,14 @@ const widthImg = width / 7;
 export default class DateSchedule extends React.Component {
   static propTypes = {
     date: PropTypes.string.isRequired,
-    jurusan: PropTypes.string.isRequired,
+    jurusan: PropTypes.string,
   }
 
   state = {
     date: '',
     month: '',
     year: '',
+    jurusan: ['Manajemen', 'informatika'],
   };
 
   componentWillMount() {
@@ -26,6 +28,10 @@ export default class DateSchedule extends React.Component {
       month: split[1],
       year: split[2],
     });
+    if (this.props.jurusan != undefined) {
+      const jurusan = this.props.jurusan.split(' ');
+      this.setState({ jurusan });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,17 +43,17 @@ export default class DateSchedule extends React.Component {
         year: split[2],
       });
     }
-  }
-
-  splitJurusan = (jurusan, isStarter) => {
-    const spliter = jurusan.split(' ');
-    const result = isStarter ? spliter[0] : spliter[1];
-    return result;
+    if (this.props.jurusan != nextProps.jurusan) {
+      if (nextProps.jurusan != undefined) {
+        const jurusan = nextProps.jurusan.split(' ');
+        this.setState({ jurusan });
+      }
+    }
   }
 
   render() {
-    const { date, month, year } = this.state;
-    const { jurusan } = this.props;
+    const { date, month, year, jurusan } = this.state;
+
     return (
       <View style={styles.container}>
         <View style={styles.textContainer}>
@@ -57,8 +63,8 @@ export default class DateSchedule extends React.Component {
             <Text style={styles.month}>{year}{'\n'}{month}</Text>
           </View>
           <View style={styles.jurusanContainer}>
-            <Text style={styles.jurusanUp}>{this.splitJurusan(jurusan, true)}</Text>
-            <Text style={styles.jurusanDown}>{this.splitJurusan(jurusan, false)}</Text>
+            <Text style={styles.jurusanUp}>{jurusan[0]}</Text>
+            <Text style={styles.jurusanDown}>{jurusan[1]}</Text>
           </View>
         </View>
 
@@ -101,7 +107,6 @@ const styles = StyleSheet.create({
   },
   jurusanContainer: {
     flexDirection: 'row',
-    marginTop: 10,
   },
   jurusanUp: {
     fontSize: 18,

@@ -10,36 +10,33 @@ import TabMain from './TabMain';
 
 export default class TabContainer extends React.Component {
   static propTypes = {
-    fetchPoint: PropTypes.func.isRequired,
     fetching: PropTypes.bool.isRequired,
-    point: PropTypes.array.isRequired,
+    scores: PropTypes.array.isRequired,
     user: PropTypes.object.isRequired,
     selectedSemester: PropTypes.string.isRequired,
     changeSemester: PropTypes.func.isRequired,
   };
 
   state = {
-    filteredPoint: [],
-    point: [],
+    filteredScores: [],
     selectedTab: '',
+    scoresLength: 0,
   };
 
-  componentWillMount() {
-    const { nim } = this.props.user;
-    this.props.fetchPoint(nim);
-  }
-
   componentWillReceiveProps(nextProps) {
-    const { point, selectedSemester } = this.props;
-    if (point != nextProps.point || selectedSemester != nextProps.selectedSemester) {
-      if (nextProps.point.length > 0) {
-        const filtered = nextProps.point.filter((item) => {
+    const { selectedSemester, scores } = this.props;
+    if (scores != nextProps.scores || selectedSemester != nextProps.selectedSemester) {
+      if (nextProps.scores.length > 0) {
+        const filtered = nextProps.scores.filter((item) => {
           return item.semester == nextProps.selectedSemester;
         });
-        this.setState({
-          filteredPoint: filtered,
-          point: nextProps.point,
-        });
+
+        const scoresLength = [...nextProps.scores.reduce((mp, o) => {
+          if (!mp.has(o.semester)) mp.set(o.semester, Object.assign({ length: 0 }, o));
+          mp.get(o.semester).length += 1;
+          return mp;
+        }, new Map()).values()];
+        this.setState({ filteredScores: filtered, scoresLength: scoresLength.length });
       }
     }
   }
@@ -49,9 +46,9 @@ export default class TabContainer extends React.Component {
   }
 
   render() {
-    const { point, filteredPoint, selectedTab } = this.state;
+    const { filteredScores, selectedTab, scoresLength } = this.state;
     const {
-      fetching, user,
+      fetching, user, scores,
       selectedSemester, changeSemester,
     } = this.props;
 
@@ -60,7 +57,7 @@ export default class TabContainer extends React.Component {
         tabBarUnderlineStyle={styles.tabContainer}
         onChangeTab={({ i }) => this.changeTab(i)} >
         <Tab
-          heading={`LOCAL (${filteredPoint.length})`}
+          heading={`LOCAL (${filteredScores.length})`}
           textStyle={styles.white}
           tabStyle={{ backgroundColor: '#4caf50' }}
           activeTabStyle={{ backgroundColor: '#4caf50' }}
@@ -71,17 +68,18 @@ export default class TabContainer extends React.Component {
             selectedSemester={selectedSemester}
             user={user}
             fetching={fetching}
-            point={filteredPoint} />
+            scores={filteredScores}
+            scoresLength={scoresLength} />
         </Tab>
         <Tab
-          heading={`MAIN (${point.length})`}
+          heading={`MAIN (${scores.length})`}
           textStyle={styles.white}
           tabStyle={{ backgroundColor: '#4caf50' }}
           activeTabStyle={{ backgroundColor: '#4caf50' }}
           activeTextStyle={styles.white}>
           <TabMain
             fetching={fetching}
-            point={point} />
+            scores={scores} />
         </Tab>
       </Tabs>
     );

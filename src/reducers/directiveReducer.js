@@ -24,7 +24,7 @@ const reducer = (state = initialState, action) => {
     case 'STORE_USER': {
       let semester = null;
       switch (action.payload.semester) {
-        case 'I': semester = null;
+        case 'I': semester = 'I';
           break;
 
         case 'II': semester = 'I';

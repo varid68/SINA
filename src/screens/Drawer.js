@@ -12,9 +12,7 @@ const initialState = {
   screen0: false,
   screen1: false,
   screen3: false,
-  screen4: false,
   screen5: false,
-  screen6: false,
   screen7: false,
   screen8: false,
 };
@@ -101,15 +99,6 @@ class Drawer extends React.Component {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={this.getStyle(screen4)}
-            onPress={() => this.toPage('screen.Ngampus', 'screen4')}>
-            <Image
-              source={require('../images/grafik.png')}
-              style={styles.imageIcon} />
-            <Text style={this.getStyleText(screen4, '#039be5')}>Grafik</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
             style={this.getStyle(screen5)}
             onPress={() => this.toPage('screen.Account', 'screen5')}>
             <Image
@@ -120,14 +109,6 @@ class Drawer extends React.Component {
 
           <View style={styles.line} />
 
-          <TouchableOpacity
-            style={this.getStyle(screen6)}
-            onPress={() => this.toPage('screen.Setting', 'screen6')}>
-            <Image
-              source={require('../images/setting.png')}
-              style={styles.imageIcon} />
-            <Text style={styles.btnText}>Setting</Text>
-          </TouchableOpacity>
           <TouchableOpacity
             style={this.getStyle(screen7)}
             onPress={() => this.toPage('screen.About', 'screen7')}>
@@ -147,7 +128,7 @@ class Drawer extends React.Component {
           </View>
 
         </ScrollView>
-      </View>
+      </View >
     );
   }
 }

@@ -20,17 +20,30 @@ class Schedule extends React.Component {
   };
 
   componentWillMount() {
+    OneSignal.init('2c7ad97d-4e18-4c4c-b2fe-12016a3b1565', { kOSSettingsKeyAutoPrompt: true });
+  }
+
+  componentDidMount() {
+    this.onReceived = this.onReceived.bind(this);
+    this.onOpened = this.onOpened.bind(this);
+    this.onIds = this.onIds.bind(this);
+    this.onEmailRegistrationChange = this.onEmailRegistrationChange.bind(this);
+
     OneSignal.addEventListener('received', this.onReceived);
     OneSignal.addEventListener('opened', this.onOpened);
-    OneSignal.addEventListener('registered', this.onRegistered);
     OneSignal.addEventListener('ids', this.onIds);
+    OneSignal.addEventListener('emailSubscription', this.onEmailRegistrationChange);
   }
 
   componentWillUnmount() {
     OneSignal.removeEventListener('received', this.onReceived);
     OneSignal.removeEventListener('opened', this.onOpened);
-    OneSignal.removeEventListener('registered', this.onRegistered);
     OneSignal.removeEventListener('ids', this.onIds);
+    OneSignal.removeEventListener('emailSubscription', this.onEmailRegistrationChange);
+  }
+
+  onEmailRegistrationChange(registration) {
+    console.log('onEmailRegistrationChange: ', registration);
   }
 
   onReceived(notification) {
@@ -42,10 +55,6 @@ class Schedule extends React.Component {
     console.log('Data: ', openResult.notification.payload.additionalData);
     console.log('isActive: ', openResult.notification.isAppInFocus);
     console.log('openResult: ', openResult);
-  }
-
-  onRegistered(notifData) {
-    console.log('Device had been registered for push notifications!', notifData);
   }
 
   onIds(device) {
@@ -75,7 +84,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setModalVisible: () => dispatch(setModalVisible()),
-  fetchSchedule: () => dispatch(fetchSchedule()),
+  fetchSchedule: (semester, jurusan) => dispatch(fetchSchedule(semester, jurusan)),
   storeUser: user => dispatch(storeUser(user)),
 });
 

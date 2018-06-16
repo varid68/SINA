@@ -3,10 +3,11 @@ const initialState = {
   listNews: [],
   listSchedule: [],
   filteredListSchedule: [],
-  point: [],
-  filteredPoint: [],
-  indeks: [],
-  filteredIndeks: [],
+  scores: [],
+  filteredScores: [],
+  ips: [],
+  filteredIps: [],
+  ipk: 0,
   calendar: [],
   fetching: false,
   error: '',
@@ -78,41 +79,22 @@ const reducer = (state = initialState, action) => {
       };
       break;
 
-    case 'FETCH_POINT_PENDING':
+    case 'FETCH_GRADE_POINT_PENDING':
       return { ...state, fetching: true };
       break;
 
-    case 'FETCH_POINT_FULFILLED':
+    case 'FETCH_GRADE_POINT_FULFILLED':
       return {
         ...state,
         fetching: false,
-        point: action.payload.data,
+        scores: action.payload.data.finalScores,
+        ips: action.payload.data.ips,
+        ipk: action.payload.data.ipk,
         error: '',
       };
       break;
 
-    case 'FETCH_POINT_REJECTED':
-      return {
-        ...state,
-        fetching: false,
-        error: action.payload,
-      };
-      break;
-
-    case 'FETCH_INDEKS_PENDING':
-      return { ...state, fetching: true };
-      break;
-
-    case 'FETCH_INDEKS_FULFILLED':
-      return {
-        ...state,
-        fetching: false,
-        indeks: action.payload.data,
-        error: '',
-      };
-      break;
-
-    case 'FETCH_INDEKS_REJECTED':
+    case 'FETCH_GRADE_POINT_REJECTED':
       return {
         ...state,
         fetching: false,

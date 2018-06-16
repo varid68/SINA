@@ -2,29 +2,40 @@
 
 buildscript {
     repositories {
+        mavenLocal()
         jcenter()
+        maven {
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+            url "$rootDir/../node_modules/react-native/android"
+        }
+        // -------------------------------------------------
+        // Add this below the existing maven property above
+        // -------------------------------------------------
+        maven {
+            url 'https://maven.google.com'
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:3.1.2'
         classpath 'com.android.tools.build:gradle:2.2.+'
-        classpath 'com.google.gms:google-services:3.1.2' 
+        classpath 'com.google.gms:google-services:3.2.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
-def googlePlayServicesVersion = '11.6.0'
+def googlePlayServicesVersion = '15.0.2'
 
 allprojects {
     repositories {
         configurations.all {
-            resolutionStrategy {
-                // react-native-onesignal
-                force "com.google.android.gms:play-services-gcm:$googlePlayServicesVersion"
-                force "com.google.android.gms:play-services-analytics:$googlePlayServicesVersion"
-                force "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
-            }
+            // resolutionStrategy {
+            //     // react-native-onesignal
+            //     force "com.google.android.gms:play-services-gcm:$googlePlayServicesVersion"
+            //     force "com.google.android.gms:play-services-analytics:$googlePlayServicesVersion"
+            //     force "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
+            // }
         }
         mavenLocal()
         jcenter()
